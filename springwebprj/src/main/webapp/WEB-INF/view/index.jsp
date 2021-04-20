@@ -109,7 +109,7 @@
 	</section>
 
 
-	<p>${test.test1} ${test.test2}</p>
+	<p>${test20.test1} ${test20.test2}</p>
 
 <div class="modal fade" id="registerModal" tabindex="-1" role="dialog" aria-labelledby="modal" aria-hidden="true">
 		<div class="modal-dialog">

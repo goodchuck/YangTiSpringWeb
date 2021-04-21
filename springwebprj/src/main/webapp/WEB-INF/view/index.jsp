@@ -47,7 +47,7 @@
 				id="navbarDropdownMenuLink" role="button" data-toggle="dropdown"
 				aria-haspopup="true" aria-expanded="false"> 접속하기 </a>
 			<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-				<a class="dropdown-item" href="/springwebprj/userJoin">로그인</a> <a
+				<a class="dropdown-item" href="/springwebprj/userLogin">로그인</a> <a
 					class="dropdown-item" href="/springwebprj/userJoin">회원가입</a>
 			</div>
 		</div>
@@ -58,11 +58,11 @@
 			type="search" placeholder="내용을 입력하세요." aria-label="Search">
 		<button class="btn btn-outline-success my-2 my-sm-0" type="submit">검색</button>
 	</form>
+	<h1>들어온사람 : <%= session.getAttribute("testForm") != null ? "존재" : "없음" %></h1>
+	<h1>들어온사람 : ${sessiontest}</h1>
 
-	<h1>작성자 : ${ts1} </h1>
-	<h1>글내용 : ${ts2} </h1>
 
-
+	
 	<section class="container"> <!-- html5에서 사용하는거고 본문같은거 담을때 사용함 -->
 		<form method="get" action="/springwebprj/index" class="form-inline mt-3">
 			<select name="lectureDivide" class="form-control mx-1 mt-2">
@@ -112,6 +112,36 @@
 	</div>
 	</section>
 
+
+		<div class="card bg-light mt-3">
+		<div class="card-header bg-light">
+			<div class="row">
+				<div class="col-8 text-left"> &nbsp;<small></small></div>
+				<div class="col-4 text-right">
+					종합<span style="color : red;"></span>
+					<h1>테스트 : ${testarray}</h1>
+				</div>
+			</div>
+		</div>
+		<div class="card-body">
+			<h5 class="card-title">
+				&nbsp;<small></small>
+			</h5>
+			<p class="card-text"></p>
+			<div class="row">
+				<div class="col-9 text-left">
+					성적<span style="color: red;"></span>
+					널널<span style="color: red;"></span>
+					강의<span style="color: red;"></span>
+					<span style="color: green;"></span>
+				</div>
+				<div class="col-3 text-right">
+					<a onclick="return confirm('추천하시겠습니까?')" href="./likeAction.jsp?evaluationID=">추천</a>
+					<a onclick="return confirm('삭제하시겠습니까?')" href="./deleteAction.jsp?evaluationID=">삭제</a>
+				</div>
+			</div>
+		</div>
+	</div>
 
 <div class="modal fade" id="registerModal" tabindex="-1" role="dialog" aria-labelledby="modal" aria-hidden="true">
 		<div class="modal-dialog">

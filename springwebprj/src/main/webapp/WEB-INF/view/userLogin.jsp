@@ -66,7 +66,7 @@ if(userID != null){
 	</div>
 	</nav>
 	<section class="container mt-3" style="max-width: 560px;"> <!-- html5에서 사용하는거고 본문같은거 담을때 사용함 -->
-		<form method="post" action="./userLoginAction.jsp">
+		<form method="post" action="/springwebprj/userLoginAction">
 			<div class="form-group">
 				<label>아이디</label>
 				<input type="text" name="userID" class="form-control">

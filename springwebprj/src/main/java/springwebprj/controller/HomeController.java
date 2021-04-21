@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import springwebprj.main.Config;
 import springwebprj.main.Test;
 
+
 @Controller
 @RequestMapping("/")
 public class HomeController {
@@ -67,6 +68,40 @@ public class HomeController {
 	@RequestMapping("userJoin")
 	public void userJoin() {
 
+	}
+	
+	@RequestMapping("userLogin")
+	public void userLogin() {
+
+	}
+	
+	@RequestMapping("userLoginAction")
+	public String userLoginAction(HttpServletRequest request, Model model) {
+		String SQL = "SELECT userPassword FROM USER WHERE userID = ?";
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			conn = dataSource.getConnection();
+			pstmt = conn.prepareStatement(SQL);
+			pstmt.setString(1, request.getParameter("userID"));
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				if(rs.getString(1).equals(request.getParameter("userPassword"))) {
+					model.addAttribute("ts1", rs.getString("userPassword"));
+					return "test";
+				}
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+
+		} finally {
+			try { if(conn != null) conn.close(); } catch (Exception e) { e.printStackTrace();}
+			try { if(pstmt != null) pstmt.close(); } catch (Exception e) { e.printStackTrace();}
+			try { if(rs != null) rs.close(); } catch (Exception e) { e.printStackTrace();}
+		}
+		return "test";
 	}
 	
 	@RequestMapping("userJoinAction")

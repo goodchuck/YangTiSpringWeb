@@ -47,8 +47,8 @@
 				id="navbarDropdownMenuLink" role="button" data-toggle="dropdown"
 				aria-haspopup="true" aria-expanded="false"> 접속하기 </a>
 			<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-				<a class="dropdown-item" href="Ytlogin.jsp">로그인</a> <a
-					class="dropdown-item" href="Ytjoin.jsp">회원가입</a>
+				<a class="dropdown-item" href="/springwebprj/userJoin">로그인</a> <a
+					class="dropdown-item" href="/springwebprj/userJoin">회원가입</a>
 			</div>
 		</div>
 	</nav>
@@ -58,6 +58,10 @@
 			type="search" placeholder="내용을 입력하세요." aria-label="Search">
 		<button class="btn btn-outline-success my-2 my-sm-0" type="submit">검색</button>
 	</form>
+
+	<h1>작성자 : ${ts1} </h1>
+	<h1>글내용 : ${ts2} </h1>
+
 
 	<section class="container"> <!-- html5에서 사용하는거고 본문같은거 담을때 사용함 -->
 		<form method="get" action="/springwebprj/index" class="form-inline mt-3">
@@ -91,7 +95,7 @@
 			<h5 class="card-title">
 				&nbsp;<small></small>
 			</h5>
-			<p class="card-text"></p>
+			<p class="card-text">${test20.test1} ${test20.test2}</p>
 			<div class="row">
 				<div class="col-9 text-left">
 					성적<span style="color: red;"></span>
@@ -109,8 +113,6 @@
 	</section>
 
 
-	<p>${test20.test1} ${test20.test2}</p>
-
 <div class="modal fade" id="registerModal" tabindex="-1" role="dialog" aria-labelledby="modal" aria-hidden="true">
 		<div class="modal-dialog">
 			<div class="modal-content">
@@ -121,8 +123,8 @@
 					</button>
 				</div>
 				<div class="modal-body">
-					<form action="./evaluationRegisterAction.jsp" method="post">
-						<div class="form-row">
+					<form action="/springwebprj/dbTest.do5" method="post">
+<!-- 						<div class="form-row">
 							<div class="form-group col-sm-4">
 								<label>수강 연도</label>
 								<select name="lectureYear" class="form-control">
@@ -158,16 +160,16 @@
 									<option value="기타" >기타</option>
 								</select>
 							</div>
-						</div>
+						</div> -->
 						<div class="form-group">
 							<label>제목</label>
-							<input type="text" name="evaluationTitle" class="form-control" maxlength="30">
+							<input type="text" name="Title" class="form-control" maxlength="30">
 						</div>
 						<div class="form-group">
 							<label>내용</label>
-							<textarea name="evaluationContent" class="form-control" maxlength="2048" style="height : 180px;"></textarea>
+							<textarea name="Content" class="form-control" maxlength="2048" style="height : 180px;"></textarea>
 						</div>
-						<div class ="form-row">
+						<!-- <div class ="form-row">
 							<div class="form-group col-sm-3">
 								<label>종합</label>
 								<select name="totalScore" class="form-control">
@@ -208,7 +210,7 @@
 									<option value="F">F</option>
 								</select>
 							</div>							
-						</div>
+						</div> -->
 						<div class="modal-footer">
 							<button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
 							<button type="submit" class="btn btn-primary">등록하기</button>

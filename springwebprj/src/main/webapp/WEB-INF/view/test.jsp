@@ -9,6 +9,10 @@
 <body>
 	<h1>${serverTime}</h1>
 	<h1>${evaluationID}</h1>
+	<h1>${ts}</h1>
 	<h1>${userID}</h1>
+	<h1>${userPassword}</h1>
+	<h1>${ts1}</h1>
+	<h1>${ts2}</h1>
 </body>
 </html>

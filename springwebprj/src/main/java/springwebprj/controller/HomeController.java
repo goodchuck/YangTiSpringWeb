@@ -1,9 +1,16 @@
 package springwebprj.controller;
 
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import java.sql.PreparedStatement;
 
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +19,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+
 
 import springwebprj.main.Config;
 import springwebprj.main.Test;
@@ -30,8 +38,8 @@ public class HomeController {
 	@RequestMapping("index")
 	public String index(Model model) {
 
-		test20.setTest1("33");
-		test20.setTest2("44");
+		test20.setTest1("테스트를 위한");
+		test20.setTest2("글 테스트");
 		model.addAttribute("test20", test20);
 		return "index";
 	}
@@ -55,77 +63,117 @@ public class HomeController {
 	public void dnftest() {
 
 	}
+	
+	@RequestMapping("userJoin")
+	public void userJoin() {
 
-	@RequestMapping("/dbTest.do")
-	public String dbTest(Model model) {
-		Connection conn = null;
-		Statement st = null;
+	}
+	
+	@RequestMapping("userJoinAction")
+	public void userJoinAction(HttpServletRequest request, HttpServletResponse response, Model model) throws IOException {
+		   String userID = null;
+		   String userPassword = null;
+		   String userEmail = null;
+		   if(request.getParameter("userID") != null) {
+			   userID = request.getParameter("userID");
+		   }
+		   if(request.getParameter("userPassword") != null) {
+			   userPassword = request.getParameter("userPassword");
+		   }
+		   if(request.getParameter("userEmail") != null) {
+			   userEmail = request.getParameter("userEmail");
+		   }
 
-		try {
-			conn = dataSource.getConnection();
-			st = conn.createStatement();
-			ResultSet rs = st.executeQuery("select now() as now;");
-
-			while (rs.next()) {
-				model.addAttribute("serverTime", rs.getString("now"));
-			}
-
-		} catch (Exception e) {
-			e.printStackTrace();
-
-		} finally {
-			try {
-				if (st != null)
-					st.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-
-			try {
-				if (conn != null)
-					conn.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
-
-		return "test";
 	}
 
-	@RequestMapping("/dbTest.do2")
-	public String dbTest2(Model model) {
+	
+	@RequestMapping("/dbTest.do3")
+	public String dbTest3(HttpServletRequest httpServletRequest, Model model) {
+		String SQL = "INSERT INTO USER VALUES (?,?,?,?,?)";
 		Connection conn = null;
-		Statement st = null;
-
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
 		try {
 			conn = dataSource.getConnection();
-			st = conn.createStatement();
-			ResultSet rs = st.executeQuery("select * from evaluation;");
-
-			while (rs.next()) {
-				model.addAttribute("evaluationID", rs.getString("evaluationID"));
-				model.addAttribute("userID", rs.getString("userID"));
-			}
-
+			pstmt = conn.prepareStatement(SQL);
+			pstmt.setString(1, httpServletRequest.getParameter("userID"));
+			pstmt.setString(2, httpServletRequest.getParameter("userPassword"));
+			pstmt.setString(3, httpServletRequest.getParameter("userName"));
+			pstmt.setString(4, httpServletRequest.getParameter("userGender"));
+			pstmt.setString(5, httpServletRequest.getParameter("userEmail"));
+			pstmt.executeUpdate();
+			//st = conn.createStatement();
+			//ResultSet rs = st.executeQuery("select * from bbs;");
+			/*
+			 * while (rs.next()) { model.addAttribute("evaluationID",
+			 * rs.getString("bbsID")); model.addAttribute("userID", rs.getString("userID"));
+			 * }
+			 */
+			model.addAttribute("ts", "확인");
 		} catch (Exception e) {
 			e.printStackTrace();
 
 		} finally {
-			try {
-				if (st != null)
-					st.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-
-			try {
-				if (conn != null)
-					conn.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
+			try { if(conn != null) conn.close(); } catch (Exception e) { e.printStackTrace();}
+			try { if(pstmt != null) pstmt.close(); } catch (Exception e) { e.printStackTrace();}
+			try { if(rs != null) rs.close(); } catch (Exception e) { e.printStackTrace();}
 		}
+		return "userJoinAction";
+	}
+	
+	@RequestMapping("/dbTest.do4")
+	public String dbTest4(Model model) {
+		String SQL = "SELECT * FROM USER WHERE userID = ?";
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			conn = dataSource.getConnection();
+			pstmt = conn.prepareStatement(SQL);
+			pstmt.setString(1, "1234");
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				if(rs.getString(1).equals("1234")) {
+					model.addAttribute("userID", rs.getString("userID"));
+					model.addAttribute("userPassword", rs.getString("userPassword"));
+				}
+			}
+			model.addAttribute("ts", "확인");
+		} catch (Exception e) {
+			e.printStackTrace();
 
+		} finally {
+			try { if(conn != null) conn.close(); } catch (Exception e) { e.printStackTrace();}
+			try { if(pstmt != null) pstmt.close(); } catch (Exception e) { e.printStackTrace();}
+			try { if(rs != null) rs.close(); } catch (Exception e) { e.printStackTrace();}
+		}
 		return "test";
+	}
+	
+	@RequestMapping("/dbTest.do5")
+	public String dbTest5(HttpServletRequest httpServletRequest, Model model) {
+		String SQL = "INSERT INTO BBSTEST VALUES (?,?,?)";
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			conn = dataSource.getConnection();
+			pstmt = conn.prepareStatement(SQL);
+			pstmt.setString(1, "12345");
+			pstmt.setString(2, httpServletRequest.getParameter("Title"));
+			pstmt.setString(3, httpServletRequest.getParameter("Content"));
+			pstmt.executeUpdate();
+
+			model.addAttribute("ts1", httpServletRequest.getParameter("Title"));
+			model.addAttribute("ts2", httpServletRequest.getParameter("Content"));
+		} catch (Exception e) {
+			e.printStackTrace();
+
+		} finally {
+			try { if(conn != null) conn.close(); } catch (Exception e) { e.printStackTrace();}
+			try { if(pstmt != null) pstmt.close(); } catch (Exception e) { e.printStackTrace();}
+			try { if(rs != null) rs.close(); } catch (Exception e) { e.printStackTrace();}
+		}
+		return "index";
 	}
 }

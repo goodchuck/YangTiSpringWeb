@@ -33,7 +33,7 @@ public class DbController {
 	
 	@RequestMapping("userLoginAction")
 	public String userLoginAction(HttpServletRequest request, Model model, HttpSession session) {
-		String SQL = "SELECT userPassword FROM USER WHERE userID = ?";
+		String SQL = "SELECT * FROM USER WHERE userID = ?";
 
 		try {
 			conn = dataSource.getConnection();
@@ -41,23 +41,21 @@ public class DbController {
 			pstmt.setString(1, request.getParameter("userID"));
 			rs = pstmt.executeQuery();
 			if(rs.next()) {
-				if(rs.getString(1).equals(request.getParameter("userPassword"))) {
+				if(rs.getString("userPassword").equals(request.getParameter("userPassword"))) {
 					model.addAttribute("ts1", rs.getString("userPassword"));
 					model.addAttribute("testForm",rs.getString("userID"));
 					session.setAttribute("sessiontest", rs.getString("userID"));
-					return "index";
+					return "redirect:/index";
 				}
 			}
-			
 		} catch (Exception e) {
 			e.printStackTrace();
-
 		} finally {
 			try { if(conn != null) conn.close(); } catch (Exception e) { e.printStackTrace();}
 			try { if(pstmt != null) pstmt.close(); } catch (Exception e) { e.printStackTrace();}
 			try { if(rs != null) rs.close(); } catch (Exception e) { e.printStackTrace();}
 		}
-		return "index";
+		return "redirect:/userLogin";
 	}
 	
 	@RequestMapping("userJoinAction")
@@ -132,13 +130,13 @@ public class DbController {
 	}
 	
 	@RequestMapping("/dbTest.do5")
-	public String dbTest5(HttpServletRequest httpServletRequest, Model model) {
-		String SQL = "INSERT INTO BBSTEST VALUES (?,?,?)";
+	public String dbTest5(HttpServletRequest httpServletRequest,HttpSession session, Model model) {
+		String SQL = "INSERT INTO BBSTEST (id, title, content) VALUES (?,?,?)";
 
 		try {
 			conn = dataSource.getConnection();
 			pstmt = conn.prepareStatement(SQL);
-			pstmt.setString(1, "12345");
+			pstmt.setString(1, (String)session.getAttribute("sessiontest"));
 			pstmt.setString(2, httpServletRequest.getParameter("Title"));
 			pstmt.setString(3, httpServletRequest.getParameter("Content"));
 			pstmt.executeUpdate();
@@ -153,6 +151,6 @@ public class DbController {
 			try { if(pstmt != null) pstmt.close(); } catch (Exception e) { e.printStackTrace();}
 			try { if(rs != null) rs.close(); } catch (Exception e) { e.printStackTrace();}
 		}
-		return "index";
+		return "redirect:/index";
 	}
 }

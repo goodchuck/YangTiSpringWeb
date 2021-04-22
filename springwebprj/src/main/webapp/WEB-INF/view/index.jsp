@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -42,23 +43,36 @@
 		</div>
 
 		<div class="nav-item dropdown" style="float: right;">
-
+			<% if(session.getAttribute("sessiontest") == null) { %>
 			<a class="nav-link dropdown-toggle" href="#"
 				id="navbarDropdownMenuLink" role="button" data-toggle="dropdown"
 				aria-haspopup="true" aria-expanded="false"> 접속하기 </a>
+			<% } %>
+			<% if(session.getAttribute("sessiontest") != null) { %>
+			<a class="nav-link dropdown-toggle" href="#"
+				id="navbarDropdownMenuLink" role="button" data-toggle="dropdown"
+				aria-haspopup="true" aria-expanded="false"> 접속상태입니다. </a>
+			<% } %>
 			<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-				<a class="dropdown-item" href="/springwebprj/userLogin">로그인</a> <a
-					class="dropdown-item" href="/springwebprj/userJoin">회원가입</a>
+				<% if(session.getAttribute("sessiontest") == null) { %>
+				<a class="dropdown-item" href="/springwebprj/userLogin">로그인</a> 
+				<a class="dropdown-item" href="/springwebprj/userJoin">회원가입</a>
+				<% } %>
+				<% if(session.getAttribute("sessiontest") != null) {%>
+				<a class="dropdown-item" href="/springwebprj/userLogout">로그아웃</a>
+				<% } %>
 			</div>
 		</div>
 	</nav>
+
+
 	<form action="./index.jsp" method="get"
 		class="form-inline my-2 my-lg=0">
 		<input type="text" name="search" class="form-control mr-sm-2"
 			type="search" placeholder="내용을 입력하세요." aria-label="Search">
 		<button class="btn btn-outline-success my-2 my-sm-0" type="submit">검색</button>
 	</form>
-	<h1>들어온사람 : <%= session.getAttribute("testForm") != null ? "존재" : "없음" %></h1>
+	<%-- <h1>들어온사람 : <%= session.getAttribute("testForm") != null ? "존재" : "없음" %></h1> --%>
 	<h1>들어온사람 : ${sessiontest}</h1>
 
 
@@ -110,10 +124,8 @@
 			</div>
 		</div>
 	</div>
-	</section>
-
-
-		<div class="card bg-light mt-3">
+	
+			<div class="card bg-light mt-3">
 		<div class="card-header bg-light">
 			<div class="row">
 				<div class="col-8 text-left"> &nbsp;<small></small></div>
@@ -142,6 +154,10 @@
 			</div>
 		</div>
 	</div>
+	</section>
+
+
+
 
 <div class="modal fade" id="registerModal" tabindex="-1" role="dialog" aria-labelledby="modal" aria-hidden="true">
 		<div class="modal-dialog">
@@ -153,7 +169,7 @@
 					</button>
 				</div>
 				<div class="modal-body">
-					<form action="/springwebprj/dbTest.do5" method="post">
+					<form action="/springwebprj/db/dbTest.do5" method="post">
 <!-- 						<div class="form-row">
 							<div class="form-group col-sm-4">
 								<label>수강 연도</label>

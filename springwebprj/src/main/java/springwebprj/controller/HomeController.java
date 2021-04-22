@@ -30,7 +30,6 @@ import springwebprj.main.Test;
 
 
 @Controller
-@SessionAttributes("testForm")
 @RequestMapping("/")
 public class HomeController {
 
@@ -45,13 +44,9 @@ public class HomeController {
 	PreparedStatement pstmt = null;
 	ResultSet rs = null;
 	
-	@ModelAttribute("testForm")
-	public String sessiontest() {
-		return new String();
-	}
 	
 	@RequestMapping("index")
-	public String index(@ModelAttribute("eventForm") String sessiontest, HttpServletRequest request,Model model) {
+	public String index(HttpServletRequest request,Model model) {
 
 		test20.setTest1("테스트를 위한");
 		test20.setTest2("글 테스트");
@@ -107,6 +102,12 @@ public class HomeController {
 	@RequestMapping("userLogin")
 	public void userLogin() {
 
+	}
+	
+	@RequestMapping("userLogout")
+	public String userLogout(HttpSession session) {
+		session.invalidate();
+		return "redirect:/index";
 	}
 	
 }

@@ -96,50 +96,21 @@
 			<a class="btn btn-danger mx-1 mt-2" data-toggle="modal" href="#reportModal">신고</a> <!-- modal은 웹페이지의 위쪽에 등장하는 하나의 등록양식과같은 특이한거 -->
 		</form>
 
-		<div class="card bg-light mt-3">
-		<div class="card-header bg-light">
-			<div class="row">
-				<div class="col-8 text-left">&nbsp;<small></small></div>
-				<div class="col-4 text-right">
-					종합<span style="color : red;"></span>
-				</div>
-			</div>
-		</div>
-		<div class="card-body">
-			<h5 class="card-title">
-				&nbsp;<small></small>
-			</h5>
-			<p class="card-text">${test20.test1} ${test20.test2}</p>
-			<div class="row">
-				<div class="col-9 text-left">
-					성적<span style="color: red;"></span>
-					널널<span style="color: red;"></span>
-					강의<span style="color: red;"></span>
-					<span style="color: green;"></span>
-				</div>
-				<div class="col-3 text-right">
-					<%-- <a onclick="return confirm('추천하시겠습니까?')" href="./likeAction.jsp?evaluationID=<%= evaluation.getEvaluationID() %>">추천</a> --%>
-					<%-- <a onclick="return confirm('삭제하시겠습니까?')" href="./deleteAction.jsp?evaluationID=<%= evaluation.getEvaluationID() %>">삭제</a> --%>
-				</div>
-			</div>
-		</div>
-	</div>
-	
+	<c:forEach var="test" items="${testarray}" varStatus="status">
 			<div class="card bg-light mt-3">
 		<div class="card-header bg-light">
 			<div class="row">
 				<div class="col-8 text-left"> &nbsp;<small></small></div>
 				<div class="col-4 text-right">
-					종합<span style="color : red;"></span>
-					<h1>테스트 : ${testarray}</h1>
+					종합<span style="color : red;">${test.bbsid}</span>
 				</div>
 			</div>
 		</div>
 		<div class="card-body">
 			<h5 class="card-title">
-				&nbsp;<small></small>
+				&nbsp;<small>${test.id}, ${test.title}</small>
 			</h5>
-			<p class="card-text"></p>
+			<p class="card-text">${test.content}</p>
 			<div class="row">
 				<div class="col-9 text-left">
 					성적<span style="color: red;"></span>
@@ -154,7 +125,8 @@
 			</div>
 		</div>
 	</div>
-	</section>
+	</c:forEach>
+	</section>      
 
 
 

@@ -2,9 +2,16 @@ package springwebprj.main;
 
 public class HealthDTO {
 
+	private int bbsid;
 	private String id;
 	private String title;
 	private String content;
+	public int getBbsid() {
+		return bbsid;
+	}
+	public void setBbsid(int bbsid) {
+		this.bbsid = bbsid;
+	}
 	public String getId() {
 		return id;
 	}
@@ -28,12 +35,15 @@ public class HealthDTO {
 		
 	}
 	
-	public HealthDTO(String id, String title, String content) {
+	public HealthDTO(int bbsid, String id, String title, String content) {
 		super();
+		this.bbsid = bbsid;
 		this.id = id;
 		this.title = title;
 		this.content = content;
 	}
+	
+
 	
 	
 }

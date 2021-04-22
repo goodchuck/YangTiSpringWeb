@@ -7,6 +7,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -51,26 +53,30 @@ public class HomeController {
 		test20.setTest1("Å×½ºÆ®¸¦ À§ÇÑ");
 		test20.setTest2("±Û Å×½ºÆ®");
 		model.addAttribute("test20", test20);
-		
+		List<String> nameList = new ArrayList<String>(Arrays.asList("È«±æµ¿", "±èÃ¶¼ö", "¹Ú¿µÈñ"));
+		ArrayList<HealthDTO> hd = new ArrayList<HealthDTO>();
+		HealthDTO dto = new HealthDTO();
+		model.addAttribute("nameList", nameList);
+
 		String SQL = "SELECT * FROM BBSTEST";
 
-//		try {
-//			conn = dataSource.getConnection();
-//			pstmt = conn.prepareStatement(SQL);
-//			rs = pstmt.executeQuery();
-//			ArrayList<String> testarray = new ArrayList<String>();
-//			while(rs.next()) {
-//				model.addAttribute("testarray", testarray);
-//			}
-//			
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//
-//		} finally {
-//			try { if(conn != null) conn.close(); } catch (Exception e) { e.printStackTrace();}
-//			try { if(pstmt != null) pstmt.close(); } catch (Exception e) { e.printStackTrace();}
-//			try { if(rs != null) rs.close(); } catch (Exception e) { e.printStackTrace();}
-//		}
+		try {
+			conn = dataSource.getConnection();
+			pstmt = conn.prepareStatement(SQL);
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				hd.add(new HealthDTO(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getString(4)));
+				model.addAttribute("testarray", hd);
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+
+		} finally {
+			try { if(conn != null) conn.close(); } catch (Exception e) { e.printStackTrace();}
+			try { if(pstmt != null) pstmt.close(); } catch (Exception e) { e.printStackTrace();}
+			try { if(rs != null) rs.close(); } catch (Exception e) { e.printStackTrace();}
+		}
 		return "index";
 	}
 

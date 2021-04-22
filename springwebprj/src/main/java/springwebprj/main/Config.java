@@ -11,4 +11,9 @@ public class Config {
 	public Test test() {
 		return new Test();
 	}
+	
+	@Bean
+	public MemberRegistRequest favoriteOs() {
+		return new MemberRegistRequest();
+	}
 }

@@ -28,6 +28,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import springwebprj.main.Config;
 import springwebprj.main.HealthDTO;
+import springwebprj.main.MemberRegistRequest;
 import springwebprj.main.Test;
 
 
@@ -41,15 +42,25 @@ public class HomeController {
 	AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext(Config.class);
 
 	
-	Test test20 = ctx.getBean("test", Test.class);
+//	@ModelAttribute("loginTypes")
+//	protected List<String> referenceData() throws Exception {
+//		List<String> loginTypes = new ArrayList<String>();
+//		loginTypes.add("일반회원");
+//		loginTypes.add("기업회원");
+//		loginTypes.add("헤드헌터회원");
+//		return loginTypes;
+//	}
+	
+	Test test20 = ctx.getBean(Test.class);
+	MemberRegistRequest mrr = ctx.getBean(MemberRegistRequest.class);
 	Connection conn = null;
 	PreparedStatement pstmt = null;
 	ResultSet rs = null;
 	
 	
 	@RequestMapping("index")
-	public String index(HttpServletRequest request,Model model) {
-
+	public String index(HttpServletRequest request, Model model) {
+		
 		test20.setTest1("테스트를 위한");
 		test20.setTest2("글 테스트");
 		model.addAttribute("test20", test20);
@@ -57,8 +68,10 @@ public class HomeController {
 		ArrayList<HealthDTO> hd = new ArrayList<HealthDTO>();
 		HealthDTO dto = new HealthDTO();
 		model.addAttribute("nameList", nameList);
-
-		String SQL = "SELECT * FROM BBSTEST";
+		
+		mrr.setFavoriteOs(new String[] {"유산소","무산소"});
+		model.addAttribute("favoriteOsNames", mrr.getFavoriteOs());
+		String SQL = "SELECT * FROM BBSTEST ORDER BY bbsid desc";
 
 		try {
 			conn = dataSource.getConnection();

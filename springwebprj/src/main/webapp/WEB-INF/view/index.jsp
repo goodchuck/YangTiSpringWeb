@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
@@ -7,7 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>양티의 스프링 연습 헬스작성표</title>
-
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <!-- 부트스트랩 -->
 <link rel="stylesheet"
 	href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
@@ -66,17 +65,20 @@
 	</nav>
 
 
-	<form action="./index.jsp" method="get"
+	<form action="/springwebprj/index" method="get"
 		class="form-inline my-2 my-lg=0">
 		<input type="text" name="search" class="form-control mr-sm-2"
 			type="search" placeholder="내용을 입력하세요." aria-label="Search">
 		<button class="btn btn-outline-success my-2 my-sm-0" type="submit">검색</button>
 	</form>
 	<%-- <h1>들어온사람 : <%= session.getAttribute("testForm") != null ? "존재" : "없음" %></h1> --%>
-	<h1>들어온사람 : ${sessiontest}</h1>
-
-
+	<h3>들어온사람 : ${sessiontest}</h3>
 	
+
+	<p>
+		<form:label path="favoriteOsNames">선호 OS</form:label>
+		<form:checkboxes items="${favoriteOsNames}" path="favoriteOsNames"/>
+	</p>
 	<section class="container"> <!-- html5에서 사용하는거고 본문같은거 담을때 사용함 -->
 		<form method="get" action="/springwebprj/index" class="form-inline mt-3">
 			<select name="lectureDivide" class="form-control mx-1 mt-2">
@@ -92,7 +94,9 @@
 			</select>
 			<input type="text" name="search" class="form-control mx-1 mt-2" placeholder="내용을 입력하세요.">
 			<button type="submit" class="btn btn-primary mx-1 mt-2">검색</button>
+			<% if(session.getAttribute("sessiontest") != null) { %>
 			<a class="btn btn-primary mx-1 mt-2" data-toggle="modal" href="#registerModal">등록하기</a> <!-- modal은 웹페이지의 위쪽에 등장하는 하나의 등록양식과같은 특이한거 -->
+			<% } %>
 			<a class="btn btn-danger mx-1 mt-2" data-toggle="modal" href="#reportModal">신고</a> <!-- modal은 웹페이지의 위쪽에 등장하는 하나의 등록양식과같은 특이한거 -->
 		</form>
 
@@ -101,18 +105,22 @@
 		<div class="card-header bg-light">
 			<div class="row">
 				<div class="col-8 text-left"> &nbsp;<small></small></div>
-				<div class="col-4 text-right">
-					종합<span style="color : red;">${test.bbsid}</span>
+				<div class="col-4 text-left">
+					<span style="color : red;">${test.bbsid} 번 게시물</span>
 				</div>
 			</div>
 		</div>
 		<div class="card-body">
 			<h5 class="card-title">
-				&nbsp;<small>${test.id}, ${test.title}</small>
+				&nbsp;<small>작성자 : ${test.id}, 제목 : ${test.title}</small>
 			</h5>
+			<p>내용</p>
 			<p class="card-text">${test.content}</p>
-			<div class="row">
+			
+			<h3></h3>
+<!-- 			<div class="row">
 				<div class="col-9 text-left">
+
 					성적<span style="color: red;"></span>
 					널널<span style="color: red;"></span>
 					강의<span style="color: red;"></span>
@@ -122,7 +130,7 @@
 					<a onclick="return confirm('추천하시겠습니까?')" href="./likeAction.jsp?evaluationID=">추천</a>
 					<a onclick="return confirm('삭제하시겠습니까?')" href="./deleteAction.jsp?evaluationID=">삭제</a>
 				</div>
-			</div>
+			</div> -->
 		</div>
 	</div>
 	</c:forEach>
@@ -179,6 +187,7 @@
 								</select>
 							</div>
 						</div> -->
+						
 						<div class="form-group">
 							<label>제목</label>
 							<input type="text" name="Title" class="form-control" maxlength="30">
@@ -238,6 +247,28 @@
 			</div>
 		</div>
 	</div>
+
+			<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+				aria-labelledby="myModalLabel" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal"
+								aria-hidden="true">&times;</button>
+							<h4 class="modal-title" id="myModalLabel">Modal title</h4>
+						</div>
+						<div class="modal-body">처리가 완료되었습니다.</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-default"
+								data-dismiss="modal">Close</button>
+							<button type="button" class="btn btn-primary">Save
+								changes</button>
+						</div>
+					</div>
+					<!-- /.modal-content -->
+				</div>
+				<!-- /.modal-dialog -->
+			</div>
 
 	<div class="modal fade" id="reportModal" tabindex="-1" role="dialog" aria-labelledby="modal" aria-hidden="true">
 		<div class="modal-dialog">

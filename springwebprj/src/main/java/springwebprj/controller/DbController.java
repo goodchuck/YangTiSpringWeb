@@ -143,6 +143,7 @@ public class DbController {
 
 			model.addAttribute("ts1", httpServletRequest.getParameter("Title"));
 			model.addAttribute("ts2", httpServletRequest.getParameter("Content"));
+			model.addAttribute("ts3", httpServletRequest.getParameter("favoriteOsNames"));
 		} catch (Exception e) {
 			e.printStackTrace();
 

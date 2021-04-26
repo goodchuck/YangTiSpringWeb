@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ page import="java.io.PrintWriter" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -82,7 +84,24 @@ if(userID != null){
 			</div>
 			<button type="submit" class="btn btn-primary">로그인</button>
 		</form>
+		
+		
 	</section>
+	<c:choose>
+
+	<c:when test="${msg == 'failure'}">
+		<div style="color: red">
+			아이디 또는 비밀번호가 일치하지 않습니다.
+		</div>
+	</c:when>
+	
+	<c:when test="${msg == null}">
+		<div style="color: red">
+			아무것도 없습니다.
+		</div>
+	</c:when>
+	
+	</c:choose>
 	
 	<footer class="bg-dark mt-4 p-5 text-center" style="color: #FFFFFF;">
 		Copyright &copy; 2018 나동빈 All Rights Reserved.

@@ -13,6 +13,7 @@ import org.apache.commons.dbcp2.BasicDataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import springwebprj.main.Test;
@@ -46,10 +47,16 @@ public class DbController {
 					model.addAttribute("testForm",rs.getString("userID"));
 					session.setAttribute("sessiontest", rs.getString("userID"));
 					return "redirect:/index";
+				} else {
+					//bindingResult.rejectValue("pw","notMatch", "아이디와 비밀번호가 맞지않습니다.");
+					model.addAttribute("msg", "failure");
+					return "userLogin";
 				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+			model.addAttribute("msg", "failure");
+			return "userLogin";
 		} finally {
 			try { if(conn != null) conn.close(); } catch (Exception e) { e.printStackTrace();}
 			try { if(pstmt != null) pstmt.close(); } catch (Exception e) { e.printStackTrace();}

@@ -15,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import springwebprj.main.Test;
 
@@ -46,6 +47,7 @@ public class DbController {
 					model.addAttribute("ts1", rs.getString("userPassword"));
 					model.addAttribute("testForm",rs.getString("userID"));
 					session.setAttribute("sessiontest", rs.getString("userID"));
+					//model.addAttribute("msg", "success");
 					return "redirect:/index";
 				} else {
 					//bindingResult.rejectValue("pw","notMatch", "아이디와 비밀번호가 맞지않습니다.");
@@ -82,6 +84,33 @@ public class DbController {
 
 	}
 
+	@RequestMapping("bbsDeleteAction")
+	public String BbsDeleteAction(HttpServletRequest request, HttpServletResponse response, Model model, HttpSession session) throws IOException {
+		String SQL = "DELETE FROM BBSTEST WHERE BBSID = ?";
+		
+/*		if(session.getId().equals(request.getParameter("bbsid")))
+		{*/
+		try {
+			conn = dataSource.getConnection();
+			pstmt = conn.prepareStatement(SQL);
+			pstmt.setInt(1, Integer.parseInt(request.getParameter("bbsid")));
+			pstmt.executeUpdate();
+			model.addAttribute("msg", request.getParameter("bbsid"));
+			return "redirect:/index";
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			model.addAttribute("msg", "failure");
+			return "redirect:/index";
+		} finally {
+			try { if(conn != null) conn.close(); } catch (Exception e) { e.printStackTrace();}
+			try { if(pstmt != null) pstmt.close(); } catch (Exception e) { e.printStackTrace();}
+			try { if(rs != null) rs.close(); } catch (Exception e) { e.printStackTrace();}
+		}
+		/*
+		 * } return "";
+		 */
+	}
 	
 	@RequestMapping("/dbTest.do3")
 	public String dbTest3(HttpServletRequest httpServletRequest, Model model) {

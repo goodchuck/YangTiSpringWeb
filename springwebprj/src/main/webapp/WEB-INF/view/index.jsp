@@ -41,7 +41,7 @@
 			</ul>
 		</div>
 
-		<div class="nav-item dropdown" style="float: right;">
+<%-- 		<div class="nav-item dropdown" style="float: right;">
 			<% if(session.getAttribute("sessiontest") == null) { %>
 			<a class="nav-link dropdown-toggle" href="#"
 				id="navbarDropdownMenuLink" role="button" data-toggle="dropdown"
@@ -61,9 +61,33 @@
 				<a class="dropdown-item" href="/springwebprj/userLogout">로그아웃</a>
 				<% } %>
 			</div>
+		</div> --%>
+		
+		<c:choose>
+		<c:when test="${sessiontest != null}">
+			<div class="nav-item dropdown" style="float: right;">
+			<a class="nav-link dropdown-toggle" href="#"
+				id="navbarDropdownMenuLink" role="button" data-toggle="dropdown"
+				aria-haspopup="true" aria-expanded="false"> 접속상태입니다. </a>
+			<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+				<a class="dropdown-item" href="/springwebprj/userLogout">로그아웃</a>
+			</div>
+			</div>
+		</c:when>
+		<c:when test="${sessiontest == null }">
+				<div class="nav-item dropdown" style="float: right;">
+			<a class="nav-link dropdown-toggle" href="#"
+				id="navbarDropdownMenuLink" role="button" data-toggle="dropdown"
+				aria-haspopup="true" aria-expanded="false"> 접속하기 </a>
+			<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+				<a class="dropdown-item" href="/springwebprj/userLogin">로그인</a>
+				<a class="dropdown-item" href="/springwebprj/userJoin">회원가입</a> 
+			</div>
 		</div>
+		</c:when>
+		</c:choose>
 	</nav>
-
+		
 
 	<form action="/springwebprj/index" method="get"
 		class="form-inline my-2 my-lg=0">
@@ -72,13 +96,21 @@
 		<button class="btn btn-outline-success my-2 my-sm-0" type="submit">검색</button>
 	</form>
 	<%-- <h1>들어온사람 : <%= session.getAttribute("testForm") != null ? "존재" : "없음" %></h1> --%>
-	<h3>들어온사람 : ${sessiontest}</h3>
 	
-
-	<p>
+	<c:choose>
+	<c:when test = "${sessiontest ==null}">
+	<h3>로그인을 해주세요!</h3>
+	</c:when>
+	<c:when test = "${sessiontest != null}">
+	<h3>환영합니다! ${sessiontest}님! 오늘도 열심히 운동합시다!</h3>
+	</c:when>
+	</c:choose>
+	
+	<h2>값 확인 : ${msg}</h2>
+<%-- 	<p>
 		<form:label path="favoriteOsNames">선호 OS</form:label>
 		<form:checkboxes items="${favoriteOsNames}" path="favoriteOsNames"/>
-	</p>
+	</p> --%>
 	<section class="container"> <!-- html5에서 사용하는거고 본문같은거 담을때 사용함 -->
 		<form method="get" action="/springwebprj/index" class="form-inline mt-3">
 			<select name="lectureDivide" class="form-control mx-1 mt-2">
@@ -94,9 +126,9 @@
 			</select>
 			<input type="text" name="search" class="form-control mx-1 mt-2" placeholder="내용을 입력하세요.">
 			<button type="submit" class="btn btn-primary mx-1 mt-2">검색</button>
-			<% if(session.getAttribute("sessiontest") != null) { %>
+			<c:if test ="${sessiontest != null }">
 			<a class="btn btn-primary mx-1 mt-2" data-toggle="modal" href="#registerModal">등록하기</a> <!-- modal은 웹페이지의 위쪽에 등장하는 하나의 등록양식과같은 특이한거 -->
-			<% } %>
+			</c:if>
 			<a class="btn btn-danger mx-1 mt-2" data-toggle="modal" href="#reportModal">신고</a> <!-- modal은 웹페이지의 위쪽에 등장하는 하나의 등록양식과같은 특이한거 -->
 		</form>
 
@@ -104,7 +136,7 @@
 			<div class="card bg-light mt-3">
 		<div class="card-header bg-light">
 			<div class="row">
-				<div class="col-8 text-left"> &nbsp;<small></small></div>
+				<div class="col-8 text-left">제목 : ${test.title}, 작성자 : ${test.id}</div>
 				<div class="col-4 text-left">
 					<span style="color : red;">${test.bbsid} 번 게시물</span>
 				</div>
@@ -112,7 +144,7 @@
 		</div>
 		<div class="card-body">
 			<h5 class="card-title">
-				&nbsp;<small>작성자 : ${test.id}, 제목 : ${test.title}</small>
+				&nbsp;<small>작성자 : ${test.id}</small>
 			</h5>
 			<p>내용</p>
 			<p class="card-text">${test.content}</p>
@@ -131,6 +163,10 @@
 					<a onclick="return confirm('삭제하시겠습니까?')" href="./deleteAction.jsp?evaluationID=">삭제</a>
 				</div>
 			</div> -->
+			<div class="col-3 text-right">
+					<!-- <a onclick="return confirm('추천하시겠습니까?')" href="./likeAction.jsp?evaluationID=">추천</a> -->
+					<a onclick="return confirm('삭제하시겠습니까?')" href="/springwebprj/db/bbsDeleteAction?bbsid=${test.bbsid}">삭제</a>
+			</div>
 		</div>
 	</div>
 	</c:forEach>

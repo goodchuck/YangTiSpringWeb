@@ -86,7 +86,7 @@ public class DbController {
 
 	@RequestMapping("bbsDeleteAction")
 	public String BbsDeleteAction(HttpServletRequest request, HttpServletResponse response, Model model, HttpSession session) throws IOException {
-		String SQL = "DELETE FROM BBSTEST WHERE BBSID = ?";
+		String SQL = "UPDATE BBSTEST SET BBSAV = 0 WHERE BBSID = ?";
 		
 /*		if(session.getId().equals(request.getParameter("bbsid")))
 		{*/

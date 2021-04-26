@@ -78,7 +78,7 @@ public class HomeController {
 			pstmt = conn.prepareStatement(SQL);
 			rs = pstmt.executeQuery();
 			while(rs.next()) {
-				hd.add(new HealthDTO(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getString(4)));
+				hd.add(new HealthDTO(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getInt(5)));
 				model.addAttribute("testarray", hd);
 			}
 			

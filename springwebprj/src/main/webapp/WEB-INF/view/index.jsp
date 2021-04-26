@@ -133,6 +133,7 @@
 		</form>
 
 	<c:forEach var="test" items="${testarray}" varStatus="status">
+	<c:if test="${test.bbsav == 1}">
 			<div class="card bg-light mt-3">
 		<div class="card-header bg-light">
 			<div class="row">
@@ -169,6 +170,7 @@
 			</div>
 		</div>
 	</div>
+	</c:if>
 	</c:forEach>
 	</section>      
 

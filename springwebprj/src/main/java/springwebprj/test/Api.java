@@ -2,6 +2,7 @@ package springwebprj.test;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.util.Arrays;
 
 import org.json.JSONArray;
@@ -15,7 +16,10 @@ public class Api {
 	public String[] searchId(String reserverId, String recharacterName){
 		try {
 			String serverId = reserverId;
-			String characterName = recharacterName;
+			String encodeResult = URLEncoder.encode(recharacterName, "UTF-8");
+			String characterName = encodeResult;
+			
+
 			String htmlUrl = "https://api.neople.co.kr/df/servers/"+serverId +"/characters?characterName="+characterName+"&apikey=oMDk2YvEtfIzJG8SfXLWDZ3km3J1pKu6";
 			HttpURLConnection conn = (HttpURLConnection) new URL(htmlUrl).openConnection();
 			conn.setRequestMethod("GET");

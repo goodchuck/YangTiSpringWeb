@@ -37,7 +37,7 @@
 					href="/springwebprj/gallery">갤러리</a></li>
 				<li class="nav-item">
 				<a class="nav-link"
-					href="/springwebprj/dnftest">던파 연습</a>
+					href="/springwebprj/dnf/dnftestinput">던파 연습</a>
 			</ul>
 		</div>
 

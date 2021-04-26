@@ -114,48 +114,15 @@ public class DnfController {
 	
 	@RequestMapping("dnftest2")
 	public String dnftest2(HttpServletRequest request, Model model) {
-		try {
-			//String serverId = reserverId;
-			//String characterName = recharacterName;
-			String serverId = "prey";
-			String characterName = "%ec%9e%98%ed%95%a0%ea%b2%8c%ec%97%ac";
-			String htmlUrl = "https://api.neople.co.kr/df/servers/"+serverId +"/characters?characterName="+characterName+"&apikey=oMDk2YvEtfIzJG8SfXLWDZ3km3J1pKu6";
-			HttpURLConnection conn = (HttpURLConnection) new URL(htmlUrl).openConnection();
-			conn.setRequestMethod("GET");
-			
-			BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-			String inputLine;
-			StringBuffer response = new StringBuffer();
-			while((inputLine= in.readLine()) != null){
-				response.append(inputLine);
-			}
-			in.close();
-			//String[] test = new String[2];
-			System.out.println("테스트? : " + response.toString());
-			JSONObject myResponse = new JSONObject(response.toString());
-			JSONArray jArray = myResponse.getJSONArray("rows");
-			
-			String parseserverId = jArray.getJSONObject(0).getString("serverId");
-			String parsecharacterName = jArray.getJSONObject(0).getString("characterName");
-			String parsejobName = jArray.getJSONObject(0).getString("jobName");
-			String parsejobGrowName = jArray.getJSONObject(0).getString("jobGrowName");
-			String parsecharacterId = jArray.getJSONObject(0).getString("characterId");
-			//System.out.println("serverId : " + serverId);
-			//System.out.println("characterName : " + charactername);
-			ArrayList<DnfDTO> dd = new ArrayList<DnfDTO>();
-			dd.add(new DnfDTO(parseserverId, parsecharacterName, parsejobName, parsejobGrowName, parsecharacterId));
-			model.addAttribute("dd", dd);
-			String[] ts500 = new String[] {parseserverId, parsecharacterName, parsejobName, parsejobGrowName, parsecharacterId};
-			//System.out.println("테스트2 :" + ts500[0]);
-			model.addAttribute("ts500", ts500);
-			return "dnftest";
-		} catch(Exception e) {
-			System.out.println("?삤瑜? : " + e);
-		}
-
-		return "dnftest";
+		Api api = new Api();
+		model.addAttribute("testtest", api.searchId(request.getParameter("server"), request.getParameter("id")));
+		return "dnftest2";
 	}
 
-
+	@RequestMapping("dnftestinput")
+	public String dnftestinput(HttpServletRequest request, Model model) {
+		
+		return "dnftestinput";
+	}
 	
 }

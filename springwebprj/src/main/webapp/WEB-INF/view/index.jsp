@@ -106,7 +106,6 @@
 	</c:when>
 	</c:choose>
 	
-	<h2>값 확인 : ${msg}</h2>
 <%-- 	<p>
 		<form:label path="favoriteOsNames">선호 OS</form:label>
 		<form:checkboxes items="${favoriteOsNames}" path="favoriteOsNames"/>

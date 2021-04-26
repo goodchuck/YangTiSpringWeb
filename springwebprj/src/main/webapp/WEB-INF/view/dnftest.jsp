@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import="java.io.PrintWriter" %> <!-- 한글 깨짐 방지를 위한 초반 작업 -->
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%
 	request.setCharacterEncoding("UTF-8");
 %> <!-- 건너오는 모든데이터를 utf-8로 받게끔 -->
@@ -119,11 +121,25 @@
 <div class="container">
   <div class="row">
     <div class="col">
+    <ul class="list-group">
+<c:forEach var="test" items="${ts500}" varStatus="status">
+<li class="list-group-item">${test}</li>
+</c:forEach>
+</ul>
+</div>
+</div>
+</div>
+
+
+<c:forEach var="test2" items="${dd}" varStatus="status">
+<div class="container">
+  <div class="row">
+    <div class="col">
     	<ul class="list-group">
-  			<li class="list-group-item active"></li>
-  			<li class="list-group-item"></li>
-  			<li class="list-group-item"></li>
-  			<li class="list-group-item"></li>
+  			<li class="list-group-item active">${test2.serverId}</li>
+  			<li class="list-group-item">${test2.characterName}</li>
+  			<li class="list-group-item">${test2.jobName }</li>
+  			<li class="list-group-item">${test2.jobGrowName }</li>
 		</ul>
     </div>
     <div class="col">
@@ -153,7 +169,7 @@
     </div>
   </div>
 </div>
-
+</c:forEach>
 
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>

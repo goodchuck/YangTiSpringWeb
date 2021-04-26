@@ -66,7 +66,7 @@ public class HomeController {
 		model.addAttribute("test20", test20);
 		List<String> nameList = new ArrayList<String>(Arrays.asList("È«±æµ¿", "±èÃ¶¼ö", "¹Ú¿µÈñ"));
 		ArrayList<HealthDTO> hd = new ArrayList<HealthDTO>();
-		HealthDTO dto = new HealthDTO();
+		//HealthDTO dto = new HealthDTO();
 		model.addAttribute("nameList", nameList);
 		
 		mrr.setFavoriteOs(new String[] {"À¯»ê¼Ò","¹«»ê¼Ò"});

@@ -96,7 +96,7 @@ public class DbController {
 			pstmt.setInt(1, Integer.parseInt(request.getParameter("bbsid")));
 			pstmt.executeUpdate();
 			model.addAttribute("msg", request.getParameter("bbsid"));
-			return "redirect:/index";
+			return "redirct:/index";
 			
 		} catch (Exception e) {
 			e.printStackTrace();

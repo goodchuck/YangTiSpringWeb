@@ -15,7 +15,7 @@
 </head>
 <body>
 	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-		<a class="navbar-brand" href="#">양티</a>
+		<a class="navbar-brand" href="#">양티의 헬스 기록지!</a>
 		<button class="navbar-toggler" type="button" data-toggle="collapse"
 			data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown"
 			aria-expanded="false" aria-label="Toggle navigation">
@@ -33,32 +33,12 @@
 				<a class="nav-link"
 					href="/springwebprj/gallery">갤러리</a></li>
 				<li class="nav-item">
-				<a class="nav-link"
-					href="/springwebprj/dnf/dnftestinput">던파 연습</a>
 			</ul>
+		<form action="./index.jsp" method="get" class="form-inline my-2 my-lg=0">
+			<input type="text" name="search" class="form-control mr-sm-2" type="search" placeholder="내용을 입력하세요." aria-label="Search">
+			<button class="btn btn-outline-success my-2 my-sm-0" type = "submit">검색</button>
+		</form>
 		</div>
-
-<%-- 		<div class="nav-item dropdown" style="float: right;">
-			<% if(session.getAttribute("sessiontest") == null) { %>
-			<a class="nav-link dropdown-toggle" href="#"
-				id="navbarDropdownMenuLink" role="button" data-toggle="dropdown"
-				aria-haspopup="true" aria-expanded="false"> 접속하기 </a>
-			<% } %>
-			<% if(session.getAttribute("sessiontest") != null) { %>
-			<a class="nav-link dropdown-toggle" href="#"
-				id="navbarDropdownMenuLink" role="button" data-toggle="dropdown"
-				aria-haspopup="true" aria-expanded="false"> 접속상태입니다. </a>
-			<% } %>
-			<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-				<% if(session.getAttribute("sessiontest") == null) { %>
-				<a class="dropdown-item" href="/springwebprj/userLogin">로그인</a> 
-				<a class="dropdown-item" href="/springwebprj/userJoin">회원가입</a>
-				<% } %>
-				<% if(session.getAttribute("sessiontest") != null) {%>
-				<a class="dropdown-item" href="/springwebprj/userLogout">로그아웃</a>
-				<% } %>
-			</div>
-		</div> --%>
 		
 		<c:choose>
 		<c:when test="${sessiontest != null}">
@@ -85,28 +65,19 @@
 		</c:choose>
 	</nav>
 		
-
-<%-- 	<form action="/springwebprj/index" method="get"
-		class="form-inline my-2 my-lg=0">
-		<input type="text" name="search" class="form-control mr-sm-2"
-			type="search" placeholder="내용을 입력하세요." aria-label="Search">
-		<button class="btn btn-outline-success my-2 my-sm-0" type="submit">검색</button>
-	</form> --%>
-	<%-- <h1>들어온사람 : <%= session.getAttribute("testForm") != null ? "존재" : "없음" %></h1> --%>
-	
 	<c:choose>
 	<c:when test = "${sessiontest ==null}">
-	<h3>로그인을 해주세요!</h3>
+	<div class="alert alert-primary" role="alert">
+		로그인을 해주세요!
+	</div>
 	</c:when>
 	<c:when test = "${sessiontest != null}">
-	<h3>환영합니다! ${sessiontest}님! 오늘도 열심히 운동합시다!</h3>
+	<div class="alert alert-primary" role="alert">
+		환영합니다! ${sessiontest}님! 오늘도 열심히 운동합시다!
+	</div>
 	</c:when>
 	</c:choose>
 	
-<%-- 	<p>
-		<form:label path="favoriteOsNames">선호 OS</form:label>
-		<form:checkboxes items="${favoriteOsNames}" path="favoriteOsNames"/>
-	</p> --%>
 	<section class="container"> <!-- html5에서 사용하는거고 본문같은거 담을때 사용함 -->
 		<form method="get" action="/springwebprj/index" class="form-inline mt-3">
 			<select name="lectureDivide" class="form-control mx-1 mt-2">
@@ -146,22 +117,7 @@
 			<p>내용</p>
 			<p class="card-text">${test.content}</p>
 			
-			<h3></h3>
-<!-- 			<div class="row">
-				<div class="col-9 text-left">
-
-					성적<span style="color: red;"></span>
-					널널<span style="color: red;"></span>
-					강의<span style="color: red;"></span>
-					<span style="color: green;"></span>
-				</div>
-				<div class="col-3 text-right">
-					<a onclick="return confirm('추천하시겠습니까?')" href="./likeAction.jsp?evaluationID=">추천</a>
-					<a onclick="return confirm('삭제하시겠습니까?')" href="./deleteAction.jsp?evaluationID=">삭제</a>
-				</div>
-			</div> -->
 			<div class="col-3 text-right">
-					<!-- <a onclick="return confirm('추천하시겠습니까?')" href="./likeAction.jsp?evaluationID=">추천</a> -->
 					<a onclick="return confirm('삭제하시겠습니까?')" href="/springwebprj/db/bbsDeleteAction?bbsid=${test.bbsid}&userid=${test.id}&sid=${sessiontest}">삭제</a>
 			</div>
 		</div>
@@ -169,9 +125,6 @@
 	</c:if>
 	</c:forEach>
 	</section>      
-
-
-
 
 <div class="modal fade" id="registerModal" tabindex="-1" role="dialog" aria-labelledby="modal" aria-hidden="true">
 		<div class="modal-dialog">
@@ -184,44 +137,7 @@
 				</div>
 				<div class="modal-body">
 					<form action="/springwebprj/db/dbTest.do5" method="post">
-<!-- 						<div class="form-row">
-							<div class="form-group col-sm-4">
-								<label>수강 연도</label>
-								<select name="lectureYear" class="form-control">
-									<option value="2011">2011</option>
-									<option value="2012">2012</option>
-									<option value="2013">2013</option>
-									<option value="2014">2014</option>
-									<option value="2015">2015</option>
-									<option value="2016">2016</option>
-									<option value="2017">2017</option>
-									<option value="2018">2018</option>
-									<option value="2019">2019</option>
-									<option value="2020">2020</option>
-									<option value="2021" selected>2021</option>
-									<option value="2022">2022</option>
-									<option value="2023">2023</option>
-								</select>
-							</div>
-							<div class="form-group col-sm-4">
-								<label>수강 학기</label>
-								<select name="semesterDivide" class="form-control">
-									<option value="1학기" selected>1학기</option>
-									<option value="여름학기" >여름학기</option>
-									<option value="2학기" >2학기</option>
-									<option value="겨울학기" >겨울학기</option>
-								</select>
-							</div>
-							<div class="form-group col-sm-4">
-								<label>강의 구분</label>
-								<select name="lectureDivide" class="form-control">
-									<option value="전공" selected>전공</option>
-									<option value="교양" >교양</option>
-									<option value="기타" >기타</option>
-								</select>
-							</div>
-						</div> -->
-						
+
 						<div class="form-group">
 							<label>제목</label>
 							<input type="text" name="Title" class="form-control" maxlength="30">
@@ -230,48 +146,7 @@
 							<label>내용</label>
 							<textarea name="Content" class="form-control" maxlength="2048" style="height : 180px;"></textarea>
 						</div>
-						<!-- <div class ="form-row">
-							<div class="form-group col-sm-3">
-								<label>종합</label>
-								<select name="totalScore" class="form-control">
-									<option value="A" selected>A</option>
-									<option value="B">B</option> 
-									<option value="C">C</option>
-									<option value="D">D</option>
-									<option value="F">F</option>
-								</select>
-							</div>
-							<div class="form-group col-sm-3">
-								<label>성적</label>
-								<select name="creditScore" class="form-control">
-									<option value="A" selected>A</option>
-									<option value="B">B</option> 
-									<option value="C">C</option>
-									<option value="D">D</option>
-									<option value="F">F</option>
-								</select>
-							</div>
-							<div class="form-group col-sm-3">
-								<label>널널</label>
-								<select name="comfortableScore" class="form-control">
-									<option value="A" selected>A</option>
-									<option value="B">B</option> 
-									<option value="C">C</option>
-									<option value="D">D</option>
-									<option value="F">F</option>
-								</select>
-							</div>
-							<div class="form-group col-sm-3">
-								<label>강의</label>
-								<select name="lectureScore" class="form-control">
-									<option value="A" selected>A</option>
-									<option value="B">B</option> 
-									<option value="C">C</option>
-									<option value="D">D</option>
-									<option value="F">F</option>
-								</select>
-							</div>							
-						</div> -->
+
 						<div class="modal-footer">
 							<button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
 							<button type="submit" class="btn btn-primary">등록하기</button>

@@ -139,7 +139,7 @@ public class DbController {
 			try { if(pstmt != null) pstmt.close(); } catch (Exception e) { e.printStackTrace();}
 			try { if(rs != null) rs.close(); } catch (Exception e) { e.printStackTrace();}
 		}
-		return "index";
+		return "redirect:/index";
 	}
 	
 	@RequestMapping("/dbTest.do4")

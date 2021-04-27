@@ -28,9 +28,6 @@
 				</a></li>
 				<li class="nav-item">
 				<a class="nav-link"
-					href="/springwebprj/Ytbbs">게시판</a></li>
-				<li class="nav-item">
-				<a class="nav-link"
 					href="/springwebprj/versionnote">버전 노트</a></li>
 				<li class="nav-item">
 				<a class="nav-link"
@@ -89,12 +86,12 @@
 	</nav>
 		
 
-	<form action="/springwebprj/index" method="get"
+<%-- 	<form action="/springwebprj/index" method="get"
 		class="form-inline my-2 my-lg=0">
 		<input type="text" name="search" class="form-control mr-sm-2"
 			type="search" placeholder="내용을 입력하세요." aria-label="Search">
 		<button class="btn btn-outline-success my-2 my-sm-0" type="submit">검색</button>
-	</form>
+	</form> --%>
 	<%-- <h1>들어온사람 : <%= session.getAttribute("testForm") != null ? "존재" : "없음" %></h1> --%>
 	
 	<c:choose>
@@ -165,7 +162,7 @@
 			</div> -->
 			<div class="col-3 text-right">
 					<!-- <a onclick="return confirm('추천하시겠습니까?')" href="./likeAction.jsp?evaluationID=">추천</a> -->
-					<a onclick="return confirm('삭제하시겠습니까?')" href="/springwebprj/db/bbsDeleteAction?bbsid=${test.bbsid}">삭제</a>
+					<a onclick="return confirm('삭제하시겠습니까?')" href="/springwebprj/db/bbsDeleteAction?bbsid=${test.bbsid}&userid=${test.id}&sid=${sessiontest}">삭제</a>
 			</div>
 		</div>
 	</div>

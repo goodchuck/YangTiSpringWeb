@@ -47,7 +47,7 @@ public class Api {
 		} catch(Exception e) {
 			System.out.println("?˜¤ë¥? : " + e);
 		}
-		return new String[] {"-1", "-2","-3","-4","-5"};
+		return new String[] {"¿À", "·ù","ÀÔ","´Ï","´Ù"};
 	}
 	
 	public String[] searchItem(String reserverId, String recharacterId) {
@@ -96,12 +96,16 @@ public class Api {
 			}
 			in.close();
 			//String[] test = new String[2];
-			System.out.println("ê²°ê³¼ë¬? : " + response.toString());
+			System.out.println("Å×½ºÆ® 1: " + response.toString());
 			JSONObject myResponse = new JSONObject(response.toString());
-			System.out.println("?…Œ?Š¤?Š¸1 : " + myResponse);
-			JSONArray jArray = myResponse.getJSONArray("rows");
-			String parseitemName2 = jArray.getJSONObject(0).getString("name");
-			System.out.println("?…Œ?Š¤?Š¸2 : " + parseitemName2);
+			
+			JSONArray test = myResponse.getJSONObject("timeline").getJSONArray("rows");
+			System.out.println("Å×½ºÆ® 2:" + test.toString());
+			//JSONArray jArray = myResponse.getJSONArray("timeline");
+			//String parseitemName2 = jArray.getJSONObject(0).getString("rows");
+			String parseitemName2 = test.getJSONObject(0).getString("code");
+			
+			System.out.println("Å×½ºÆ® 3 : " + parseitemName2);
 			//String[] testarray = new String[100];
 			//testarray[0] = parseitemName;
 			/*for(int i=0; i<jArray.length(); i++) {

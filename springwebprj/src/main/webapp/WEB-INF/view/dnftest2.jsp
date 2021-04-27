@@ -90,36 +90,43 @@
 
 
   
-<table border="1">
-	<th>무기</th>
-	<th></th>
-	<th></th>
-	<th></th>
-	<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-	<td></td>
-	</tr>
-	<tr>
-	<td></td>
-	</tr>
-</table>
-
 <div class="container">
-  <div class="row">
-    <div class="col">
-    <ul class="list-group">
-<c:forEach var="test" items="${testtest}" varStatus="status">
-<li class="list-group-item">${test}</li>
-</c:forEach>
-</ul>
-</div>
-</div>
+	<div class="row">
+    	<div class="col">
+    		<ul class="list-group">
+				<c:forEach var="test" items="${testtest}" varStatus="status">
+					<li class="list-group-item">${test}</li>
+				</c:forEach>
+			</ul>
+		</div>
+		<div class="col">
+    		<ul class="list-group">
+				<c:forEach var="test" items="${testtest2}" varStatus="status">
+					<li class="list-group-item">${test}</li>
+				</c:forEach>
+			</ul>
+		</div>
+		<div class="w-100"></div>
+		<div class="col">
+    		<ul class="list-group">
+				<c:forEach var="test" items="${testtest3}" varStatus="status">
+					<li class="list-group-item">${test}</li>
+				</c:forEach>
+			</ul>
+		</div>
+		<div class="col">
+    		<ul class="list-group">
+				<c:forEach var="test" items="${testtest4}" varStatus="status">
+					<li class="list-group-item">${test}</li>
+				</c:forEach>
+			</ul>
+		</div>		
+	</div>
 </div>
 
 
-<c:forEach var="test2" items="${dd}" varStatus="status">
+
+<%-- <c:forEach var="test2" items="${dd}" varStatus="status">
 <div class="container">
   <div class="row">
     <div class="col">
@@ -157,7 +164,7 @@
     </div>
   </div>
 </div>
-</c:forEach>
+</c:forEach> --%>
 
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>

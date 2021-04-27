@@ -86,10 +86,10 @@ public class DbController {
 
 	@RequestMapping("bbsDeleteAction")
 	public String BbsDeleteAction(HttpServletRequest request, HttpServletResponse response, Model model, HttpSession session) throws IOException {
+		System.out.println(request.getParameter("sid"));
+		if(request.getParameter("userid").equals(request.getParameter("sid"))) {
 		String SQL = "UPDATE BBSTEST SET BBSAV = 0 WHERE BBSID = ?";
 		
-/*		if(session.getId().equals(request.getParameter("bbsid")))
-		{*/
 		try {
 			conn = dataSource.getConnection();
 			pstmt = conn.prepareStatement(SQL);
@@ -101,15 +101,19 @@ public class DbController {
 		} catch (Exception e) {
 			e.printStackTrace();
 			model.addAttribute("msg", "failure");
+			System.out.println("∫ª¿Œ¿Ãæ∆¥‘1");
 			return "redirect:/index";
 		} finally {
 			try { if(conn != null) conn.close(); } catch (Exception e) { e.printStackTrace();}
 			try { if(pstmt != null) pstmt.close(); } catch (Exception e) { e.printStackTrace();}
 			try { if(rs != null) rs.close(); } catch (Exception e) { e.printStackTrace();}
 		}
-		/*
-		 * } return "";
-		 */
+
+		}
+		else {
+			System.out.println("∫ª¿Œ¿Ãæ∆¥‘2");
+		}
+		return "redirect:/index";
 	}
 	
 	@RequestMapping("/dbTest.do3")

@@ -116,6 +116,10 @@ public class DnfController {
 	public String dnftest2(HttpServletRequest request, Model model) {
 		Api api = new Api();
 		model.addAttribute("testtest", api.searchId(request.getParameter("server"), request.getParameter("id")));
+		model.addAttribute("testtest2", api.searchId("prey", "닷지닷지닷지"));
+		model.addAttribute("testtest3", api.searchId("prey", "조지조지조지"));
+		model.addAttribute("testtest4", api.searchId("prey", "중화기따위"));
+		model.addAttribute("timeline", api.searchTimeline("prey", "e1e49bd4a4e8f9b3a3f7022f1460bd99"));
 		return "dnftest2";
 	}
 

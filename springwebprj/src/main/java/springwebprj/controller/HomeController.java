@@ -36,8 +36,10 @@ import springwebprj.main.Test;
 @RequestMapping("/")
 public class HomeController {
 
-	@Autowired
+
+	@Autowired 
 	BasicDataSource dataSource;
+
 
 	AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext(Config.class);
 
@@ -68,7 +70,7 @@ public class HomeController {
 		ArrayList<HealthDTO> hd = new ArrayList<HealthDTO>();
 		//HealthDTO dto = new HealthDTO();
 		model.addAttribute("nameList", nameList);
-		
+		//HealthDAO healthdao = new HealthDAO();
 		mrr.setFavoriteOs(new String[] {"유산소","무산소"});
 		model.addAttribute("favoriteOsNames", mrr.getFavoriteOs());
 		String SQL = "SELECT * FROM BBSTEST ORDER BY bbsid desc";
@@ -90,6 +92,10 @@ public class HomeController {
 			try { if(pstmt != null) pstmt.close(); } catch (Exception e) { e.printStackTrace();}
 			try { if(rs != null) rs.close(); } catch (Exception e) { e.printStackTrace();}
 		}
+		
+		//model.addAttribute("testarray",healthdao.select());
+
+		
 		return "index";
 	}
 

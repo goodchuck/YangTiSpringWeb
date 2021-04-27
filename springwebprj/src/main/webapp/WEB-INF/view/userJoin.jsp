@@ -19,6 +19,7 @@
 	href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
 	integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l"
 	crossorigin="anonymous">
+<script src="//code.jquery.com/jquery-3.3.1.min.js"></script>
 </head>
 <body>
 	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -75,35 +76,36 @@
 
 	<section class="container mt-3" style="max-width: 560px;">
 		<!-- html5에서 사용하는거고 본문같은거 담을때 사용함 -->
-		<form method="post" action="/springwebprj/db/dbTest.do3">
+		<form id="joinFrm" name= "joinFrm" method="post" action="/springwebprj/db/dbTest.do3">
 			<div class="form-group">
 				<label>아이디</label> 
-				<input type="text" name="userID"
+				<input type="text" id="userID" name="userID"
 					class="form-control">
 			</div>
 			<div class="form-group">
 				<label>비밀번호</label> 
-				<input type="password" name="userPassword"
+				<input type="password" id="userPassword" name="userPassword"
 					class="form-control">
 			</div>
 			<div class="form-group">
 				<label>이름</label> 
-				<input type="text" name="userName"
+				<input type="text" id="userName" name="userName"
 					class="form-control">
 			</div>
 			<div class="form-group">
 				<label>성별</label> 
-				<input type='radio' name='userGender' value='남'/>남성
-				<input type='radio' name='userGender' value='여'/>여성
+				<input type='radio' id="userGender" name='userGender' value='남'/>남성
+				<input type='radio' id="userGender" name='userGender' value='여'/>여성
 <!-- 				<input type="text" name="userGender"
 					class="form-control"> -->
 			</div>
 			<div class="form-group">
 				<label>이메일</label> 
-				<input type="email" name="userEmail"
+				<input type="email" id="userEmail" name="userEmail"
 					class="form-control">
 			</div>
-			<button type="submit" class="btn btn-primary">회원가입</button>
+			<input type="button" id="join" value="회원가입">
+			<!-- <button type="submit" class="btn btn-primary">회원가입</button> -->
 		</form>
 	</section>
 	<footer class="bg-dark mt-4 p-5 text-center" style="color: #FFFFFF;">
@@ -123,4 +125,39 @@
 	<!-- 부트스트랩 자바스크립트 추가하기 -->
 	<script src="./js/bootstrap.min.js"></script>
 </body>
+<script type="text/javascript">
+	$(document).ready(function(e){
+		$('#join').click(function(){
+
+			// 입력 값 체크
+			if($.trim($('#userID').val()) == ''){
+				alert("아이디를 입력해 주세요.");
+				$('#userID').focus();
+				return;
+			} else if($.trim($('#userPassword').val()) == ''){
+				alert("비밀번호를 입력해 주세요.");
+				$('#userPassword').focus();
+				return;
+			} else if($.trim($('#userName').val()) == ''){
+				alert("이름을 입력해 주세요.");
+				$('#userName').focus();
+				return;
+			} 
+/* 			else if($.trim($('#userGender').val()) == ''){
+				alert("성별을 입력해 주세요.");
+				$('#userPassword').focus();
+				return;
+			}  */
+			else if($.trim($('#userEmail').val()) == ''){
+				alert("이메일을 입력해 주세요.");
+				$('#userEmail').focus();
+				return;
+			}
+			
+			//전송
+			$('#joinFrm').submit();
+		});
+		
+	});
+</script>
 </html>

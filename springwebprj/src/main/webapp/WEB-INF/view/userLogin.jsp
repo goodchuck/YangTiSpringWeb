@@ -19,23 +19,10 @@
 	href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
 	integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l"
 	crossorigin="anonymous">
+	<script src="//code.jquery.com/jquery-3.3.1.min.js"></script>
 </head>
 <body>
-<%
-	String userID = null;
-if(session.getAttribute("userID") != null){
-	userID = (String) session.getAttribute("userID");	
-}
-if(userID != null){
-	   PrintWriter script = response.getWriter();
-	   script.println("<script>");
-	   script.println("alert('로그인이 된 상태입니다.');");
-	   script.println("location.href = 'index.jsp';");
-	   script.println("</script>");
-	   script.close();
-	   return;
-}
-%>
+
 		<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 		<a class="navbar-brand" href="#">양티의 헬스 기록지!</a>
 		<button class="navbar-toggler" type="button" data-toggle="collapse"
@@ -83,16 +70,16 @@ if(userID != null){
 		</c:choose>
 	</nav>
 	<section class="container mt-3" style="max-width: 560px;"> <!-- html5에서 사용하는거고 본문같은거 담을때 사용함 -->
-		<form method="post" action="/springwebprj/db/userLoginAction">
+		<form id="loginFrm" name="loginFrm" method="post" action="/springwebprj/db/userLoginAction">
 			<div class="form-group">
 				<label>아이디</label>
-				<input type="text" name="userID" class="form-control">
+				<input type="text" name="userID" id="userId" placeholder="10글자(예시)" maxlength="10" class="form-control">
 			</div>
 			<div class="form-group">
 				<label>비밀번호</label>
-				<input type="password" name="userPassword" class="form-control">
+				<input type="password" name="userPassword" id="passwd" class="form-control">
 			</div>
-			<button type="submit" class="btn btn-primary">로그인</button>
+			<input type="button" id="login" value="로그인" />
 		</form>
 		
 		
@@ -130,4 +117,25 @@ if(userID != null){
 	<!-- 부트스트랩 자바스크립트 추가하기 -->
 	<script src ="./js/bootstrap.min.js"></script>
 </body>
+<script type="text/javascript">
+	$(document).ready(function(e){
+		$('#login').click(function(){
+
+			// 입력 값 체크
+			if($.trim($('#userId').val()) == ''){
+				alert("아이디를 입력해 주세요.");
+				$('#userId').focus();
+				return;
+			}else if($.trim($('#passwd').val()) == ''){
+				alert("패스워드를 입력해 주세요.");
+				$('#passwd').focus();
+				return;
+			}
+			
+			//전송
+			$('#loginFrm').submit();
+		});
+		
+	});
+</script>
 </html>

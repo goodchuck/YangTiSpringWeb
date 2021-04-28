@@ -120,7 +120,7 @@
 			<c:if test="${test.id == sessiontest}">
 			<div class="col-3 text-right">
 				<!-- <a class="btn btn-primary mx-1 mt-2" id="alterbutton" data-toggle="modal" href="#AlterModal">수정하기</a> -->
-				<a onclick="return confirm('수정하시겠습니까?')" href="/springwebprj/db/bbsView?bbsid=${test.bbsid}&userid=${test.id}&sid=${sessiontest}&bbscontent=${test.content}&bbstitle=${test.title}">수정</a> 
+				<a onclick="return confirm('수정하시겠습니까?')" href="/springwebprj/db/bbsview?bbsid=${test.bbsid}&userid=${test.id}&sid=${sessiontest}&bbscontent=${test.content}&bbstitle=${test.title}">수정</a> 
 				<a onclick="return confirm('삭제하시겠습니까?')" href="/springwebprj/db/bbsDeleteAction?bbsid=${test.bbsid}&userid=${test.id}&sid=${sessiontest}">삭제</a>
 			</div>
 			</c:if>

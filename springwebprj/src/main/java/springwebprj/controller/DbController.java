@@ -85,12 +85,13 @@ public class DbController {
 	}
 
 	
-	@RequestMapping("bbsView")
+	@RequestMapping("bbsview")
 	public String bbsview(HttpServletRequest request, HttpServletResponse response, Model model, HttpSession session)
 	{
 		model.addAttribute("bbstitle",request.getParameter("bbstitle"));
 		model.addAttribute("bbscontent",request.getParameter("bbscontent"));
-		return "bbsView";
+		model.addAttribute("bbsid",request.getParameter("bbsid"));
+		return "bbsview";
 	}
 	
 	
@@ -133,12 +134,12 @@ public class DbController {
 		try {
 			conn = dataSource.getConnection();
 			pstmt = conn.prepareStatement(SQL);
-			pstmt.setString(1, request.getParameter("Content"));
-			pstmt.setString(2, request.getParameter("Title"));
+			pstmt.setString(1, request.getParameter("bbsContent"));
+			pstmt.setString(2, request.getParameter("bbsTitle"));
 			pstmt.setInt(3, Integer.parseInt(request.getParameter("bbsid")));
 			pstmt.executeUpdate();
 			model.addAttribute("msg", request.getParameter("bbsid"));
-			return "redirct:/index";
+			return "redirect:/index";
 			
 		} catch (Exception e) {
 			e.printStackTrace();

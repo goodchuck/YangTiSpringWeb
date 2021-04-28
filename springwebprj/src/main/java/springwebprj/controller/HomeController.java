@@ -138,5 +138,10 @@ public class HomeController {
 		return "redirect:/index";
 	}
 	
+//	@RequestMapping("bbsview")
+//	public String bbsview() {
+//
+//		return "bbsview";
+//	}
 	
 }

@@ -82,7 +82,7 @@
 	
 	<div class="container">
 	<div class="row">
-	<form method="post" action="/springwebprj/db/bbsAlterAction">
+	<form method="post" action="/springwebprj/db/bbsAlterAction?bbsid=${bbsid}">
 			<table class="table table-striped" style="text-align: center; border: 1px solid #dddddd"> 
 		<!-- 게시판 글 목록들이 홀수 짝수 색깔다르게하는거 -->
 			<thead>
@@ -110,8 +110,7 @@
 	</div>
 	</div>
 
-	</div>
-	</div>
+
 <%-- 	<div class="modal fade" id="AlterModal" tabindex="-1" role="dialog" aria-labelledby="modal" aria-hidden="true">
 		<div class="modal-dialog">
 			<div class="modal-content">

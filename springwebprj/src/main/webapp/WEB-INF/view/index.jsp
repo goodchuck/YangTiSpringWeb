@@ -186,7 +186,7 @@
 
 						<div class="modal-footer">
 							<button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
-							<button type="submit" class="btn btn-primary">등록하기</button>
+							<button type="submit" id="modalsubmit" class="btn btn-primary">등록하기</button>
 						</div>
 					</form>
 				</div>
@@ -256,11 +256,11 @@
 		integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns"
 		crossorigin="anonymous"></script>
 </body>
-<!-- <script type="text/javascript">
+<script type="text/javascript">
 	$(document).ready(function(e){
-		$('#alterbutton').click(function(){
+		$('#modalsubmit').click(function(){
 
-			// 입력 값 체크
+/* 			// 입력 값 체크
 			if($.trim($('#userId').val()) == ''){
 				alert("아이디를 입력해 주세요.");
 				$('#userId').focus();
@@ -269,12 +269,14 @@
 				alert("패스워드를 입력해 주세요.");
 				$('#passwd').focus();
 				return;
-			}
+			} */
 			
+			alert("등록이 완료되었습니다.");
+			return;
 			//전송
-			$('#loginFrm').submit();
+			//$('#loginFrm').submit();
 		});
 		
 	});
-</script> -->
+</script>
 </html>

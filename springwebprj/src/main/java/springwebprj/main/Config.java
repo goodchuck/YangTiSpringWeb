@@ -1,5 +1,7 @@
 package springwebprj.main;
 
+import org.apache.commons.dbcp2.BasicDataSource;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,10 +21,10 @@ public class Config {
 		return new MemberRegistRequest();
 	}
 
-//	 @Bean 
-//	 public HealthDTO healthDTO() 
-//	 { return new HealthDTO(); }
-//	  
+	 @Bean 
+	 public HealthDTO healthDTO() 
+	 { return new HealthDTO(); }
+	  
 //	 @Bean 
 //	 public UserDTO userDTO() 
 //	 { return new UserDTO(); }

@@ -107,13 +107,13 @@ public class DbController {
 			pstmt.setInt(1, Integer.parseInt(request.getParameter("bbsid")));
 			pstmt.executeUpdate();
 			model.addAttribute("msg", request.getParameter("bbsid"));
-			return "redirect:/springwebprj/index";
+			return "redirect:/index";
 			
 		} catch (Exception e) {
 			e.printStackTrace();
 			model.addAttribute("msg", "failure");
 			//System.out.println("�����̾ƴ�1");
-			return "redirect:/springwebprj/index";
+			return "redirect:/index";
 		} finally {
 			try { if(conn != null) conn.close(); } catch (Exception e) { e.printStackTrace();}
 			try { if(pstmt != null) pstmt.close(); } catch (Exception e) { e.printStackTrace();}
@@ -124,7 +124,7 @@ public class DbController {
 		else {
 			//System.out.println("�����̾ƴ�2");
 		}
-		return "redirect:/springwebprj/index";
+		return "redirect:/index";
 	}
 	
 	@RequestMapping("bbsAlterAction")

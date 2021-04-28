@@ -79,59 +79,39 @@
 	</c:when>
 	</c:choose>
 	
-	<section class="container"> <!-- html5에서 사용하는거고 본문같은거 담을때 사용함 -->
-		<form method="get" action="/springwebprj/index" class="form-inline mt-3">
-			<select name="lectureDivide" class="form-control mx-1 mt-2">
-				<option value="전체">전체</option>
-				<option value="전공">전공</option>
-				<option value="교양">교양</option>
-				<option value="기타">기타</option>
-			</select>
-			
-			<select name="searchType" class="form-control mx-1 mt-2">
-				<option value="최신순">최신순</option>
-				<option value="추천순">추천순</option>
-			</select>
-			<input type="text" name="search" class="form-control mx-1 mt-2" placeholder="내용을 입력하세요.">
-			<button type="submit" class="btn btn-primary mx-1 mt-2">검색</button>
-			<c:if test ="${sessiontest != null }">
-			<a class="btn btn-primary mx-1 mt-2" data-toggle="modal" href="#registerModal">등록하기</a> <!-- modal은 웹페이지의 위쪽에 등장하는 하나의 등록양식과같은 특이한거 -->
-			</c:if>
-			<a class="btn btn-danger mx-1 mt-2" data-toggle="modal" href="#reportModal">신고</a> <!-- modal은 웹페이지의 위쪽에 등장하는 하나의 등록양식과같은 특이한거 -->
-		</form>
-
-	<c:forEach var="test" items="${testarray}" varStatus="status">
-	<c:if test="${test.bbsav == 1}">
-			<div class="card bg-light mt-3">
-		<div class="card-header bg-light">
-			<div class="row">
-				<div class="col-8 text-left">제목 : ${test.title}, 작성자 : ${test.id}</div>
-				<div class="col-4 text-left">
-					<span style="color : red;">${test.bbsid} 번 게시물</span>
-				</div>
-			</div>
-		</div>
-		<div class="card-body">
-			<h5 class="card-title">
-				&nbsp;<small>작성자 : ${test.id}</small>
-			</h5>
-			<p>내용</p>
-			<p class="card-text">${test.content}</p>
-			<c:if test="${test.id == sessiontest}">
-			<div class="col-3 text-right">
-				<!-- <a class="btn btn-primary mx-1 mt-2" id="alterbutton" data-toggle="modal" href="#AlterModal">수정하기</a> -->
-				<a onclick="return confirm('수정하시겠습니까?')" href="/springwebprj/db/bbsView?bbsid=${test.bbsid}&userid=${test.id}&sid=${sessiontest}&bbscontent=${test.content}&bbstitle=${test.title}">수정</a> 
-				<a onclick="return confirm('삭제하시겠습니까?')" href="/springwebprj/db/bbsDeleteAction?bbsid=${test.bbsid}&userid=${test.id}&sid=${sessiontest}">삭제</a>
-			</div>
-			</c:if>
-		</div>
-	</div>
-	</c:if>
 	
+	<div class="container">
+	<div class="row">
+	<form method="post" action="/springwebprj/db/bbsAlterAction">
+			<table class="table table-striped" style="text-align: center; border: 1px solid #dddddd"> 
+		<!-- 게시판 글 목록들이 홀수 짝수 색깔다르게하는거 -->
+			<thead>
+				<tr> <!-- 테이블 하나의 행 -->
+					<th colspan= "2"style="background-color: #eeeeee; text-align: center;">게시판 글쓰기 양식</th>
 
-	</c:forEach>
-	</section>      
+				</tr>
+			</thead>
+			<tbody>
+			<tr>
+				<td><input type="text" class="form-control" placeholder="${bbstitle}" name="bbsTitle" maxlength="50"></td>
+			</tr>
+			<tr>
+			<td>
+			<textarea class="form-control" placeholder="${bbscontent }" name="bbsContent" maxlength="2048" style="height:350px;"></textarea></td>
+				<!-- 장문의 글을 작성할때 사용 -->
+			</tr>
+				
+			</tbody>
+			
+		</table>
+		<input type="submit" class="btn btn-primary pull-right" value="수정하기">
+	</form>
 
+	</div>
+	</div>
+
+	</div>
+	</div>
 <%-- 	<div class="modal fade" id="AlterModal" tabindex="-1" role="dialog" aria-labelledby="modal" aria-hidden="true">
 		<div class="modal-dialog">
 			<div class="modal-content">
@@ -163,89 +143,7 @@
 		</div>
 	</div> --%>
 
-<div class="modal fade" id="registerModal" tabindex="-1" role="dialog" aria-labelledby="modal" aria-hidden="true">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title" id="modal">평가등록</h5>
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-				</div>
-				<div class="modal-body">
-					<form action="/springwebprj/db/dbTest.do5" method="post">
 
-						<div class="form-group">
-							<label>제목</label>
-							<input type="text" name="Title" class="form-control" maxlength="30">
-						</div>
-						<div class="form-group">
-							<label>내용</label>
-							<textarea name="Content" class="form-control" maxlength="2048" style="height : 180px;"></textarea>
-						</div>
-
-						<div class="modal-footer">
-							<button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
-							<button type="submit" class="btn btn-primary">등록하기</button>
-						</div>
-					</form>
-				</div>
-			</div>
-		</div>
-	</div>
-	
-
-
-			<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
-				aria-labelledby="myModalLabel" aria-hidden="true">
-				<div class="modal-dialog">
-					<div class="modal-content">
-						<div class="modal-header">
-							<button type="button" class="close" data-dismiss="modal"
-								aria-hidden="true">&times;</button>
-							<h4 class="modal-title" id="myModalLabel">Modal title</h4>
-						</div>
-						<div class="modal-body">처리가 완료되었습니다.</div>
-						<div class="modal-footer">
-							<button type="button" class="btn btn-default"
-								data-dismiss="modal">Close</button>
-							<button type="button" class="btn btn-primary">Save
-								changes</button>
-						</div>
-					</div>
-					<!-- /.modal-content -->
-				</div>
-				<!-- /.modal-dialog -->
-			</div>
-
-	<div class="modal fade" id="reportModal" tabindex="-1" role="dialog" aria-labelledby="modal" aria-hidden="true">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title" id="modal">신고하기</h5>
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-				</div>
-				<div class="modal-body">
-					<form action="./reportAction.jsp" method="post">
-						<div class="form-group">
-							<label>신고 제목</label>
-							<input type="text" name="reportTitle" class="form-control" maxlength="30">
-						</div>
-						<div class="form-group">
-							<label>신고 내용</label>
-							<textarea name="reportContent" class="form-control" maxlength="2048" style="height : 180px;"></textarea>
-						</div>
-						<div class="modal-footer">
-							<button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
-							<button type="submit" class="btn btn-danger">신고하기</button>
-						</div>
-					</form>
-				</div>
-			</div>
-		</div>
-	</div>
 	<footer class="bg-dark mt-4 p-5 text-center" style="color: #FFFFFF;">
 		Copyright &copy; 2021 양태현 All Rights Reserved. </footer>
 	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"

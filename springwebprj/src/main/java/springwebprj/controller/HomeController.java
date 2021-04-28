@@ -47,14 +47,17 @@ public class HomeController {
 //	@ModelAttribute("loginTypes")
 //	protected List<String> referenceData() throws Exception {
 //		List<String> loginTypes = new ArrayList<String>();
-//		loginTypes.add("ÀÏ¹ÝÈ¸¿ø");
-//		loginTypes.add("±â¾÷È¸¿ø");
-//		loginTypes.add("ÇìµåÇåÅÍÈ¸¿ø");
+//		loginTypes.add("ï¿½Ï¹ï¿½È¸ï¿½ï¿½");
+//		loginTypes.add("ï¿½ï¿½ï¿½È¸ï¿½ï¿½");
+//		loginTypes.add("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È¸ï¿½ï¿½");
 //		return loginTypes;
 //	}
 	
-	Test test20 = ctx.getBean(Test.class);
-	MemberRegistRequest mrr = ctx.getBean(MemberRegistRequest.class);
+	/*
+	 * Test test20 = ctx.getBean(Test.class); MemberRegistRequest mrr =
+	 * ctx.getBean(MemberRegistRequest.class);
+	 */
+	
 	Connection conn = null;
 	PreparedStatement pstmt = null;
 	ResultSet rs = null;
@@ -63,16 +66,16 @@ public class HomeController {
 	@RequestMapping("index")
 	public String index(HttpServletRequest request, Model model) {
 		
-		test20.setTest1("Å×½ºÆ®¸¦ À§ÇÑ");
-		test20.setTest2("±Û Å×½ºÆ®");
-		model.addAttribute("test20", test20);
-		List<String> nameList = new ArrayList<String>(Arrays.asList("È«±æµ¿", "±èÃ¶¼ö", "¹Ú¿µÈñ"));
+//		test20.setTest1("1");
+//		test20.setTest2("2");
+//		model.addAttribute("test20", test20);
+		//List<String> nameList = new ArrayList<String>(Arrays.asList("È«ï¿½æµ¿", "ï¿½ï¿½Ã¶ï¿½ï¿½", "ï¿½Ú¿ï¿½ï¿½ï¿½"));
 		ArrayList<HealthDTO> hd = new ArrayList<HealthDTO>();
 		//HealthDTO dto = new HealthDTO();
-		model.addAttribute("nameList", nameList);
+		//model.addAttribute("nameList", nameList);
 		//HealthDAO healthdao = new HealthDAO();
-		mrr.setFavoriteOs(new String[] {"À¯»ê¼Ò","¹«»ê¼Ò"});
-		model.addAttribute("favoriteOsNames", mrr.getFavoriteOs());
+		//mrr.setFavoriteOs(new String[] {"ï¿½ï¿½ï¿½ï¿½ï¿½","ï¿½ï¿½ï¿½ï¿½ï¿½"});
+		//model.addAttribute("favoriteOsNames", mrr.getFavoriteOs());
 		String SQL = "SELECT * FROM BBSTEST ORDER BY bbsid desc";
 
 		try {
@@ -134,5 +137,6 @@ public class HomeController {
 		session.invalidate();
 		return "redirect:/index";
 	}
+	
 	
 }

@@ -26,8 +26,8 @@ public class DbController {
 	@Autowired
 	BasicDataSource dataSource;
 	
-	@Autowired
-	Test test;
+//	@Autowired
+//	Test test;
 	
 	Connection conn = null;
 	PreparedStatement pstmt = null;
@@ -50,7 +50,7 @@ public class DbController {
 					//model.addAttribute("msg", "success");
 					return "redirect:/index";
 				} else {
-					//bindingResult.rejectValue("pw","notMatch", "¾ÆÀÌµð¿Í ºñ¹Ð¹øÈ£°¡ ¸ÂÁö¾Ê½À´Ï´Ù.");
+					//bindingResult.rejectValue("pw","notMatch", "ï¿½ï¿½ï¿½Ìµï¿½ï¿½ ï¿½ï¿½Ð¹ï¿½È£ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ê½ï¿½ï¿½Ï´ï¿½.");
 					model.addAttribute("msg", "failure");
 					return "userLogin";
 				}
@@ -84,6 +84,16 @@ public class DbController {
 
 	}
 
+	
+	@RequestMapping("bbsView")
+	public String bbsview(HttpServletRequest request, HttpServletResponse response, Model model, HttpSession session)
+	{
+		model.addAttribute("bbstitle",request.getParameter("bbstitle"));
+		model.addAttribute("bbscontent",request.getParameter("bbscontent"));
+		return "bbsView";
+	}
+	
+	
 	@RequestMapping("bbsDeleteAction")
 	public String BbsDeleteAction(HttpServletRequest request, HttpServletResponse response, Model model, HttpSession session) throws IOException {
 		System.out.println(request.getParameter("sid"));
@@ -96,13 +106,13 @@ public class DbController {
 			pstmt.setInt(1, Integer.parseInt(request.getParameter("bbsid")));
 			pstmt.executeUpdate();
 			model.addAttribute("msg", request.getParameter("bbsid"));
-			return "redirct:/index";
+			return "redirect:/springwebprj/index";
 			
 		} catch (Exception e) {
 			e.printStackTrace();
 			model.addAttribute("msg", "failure");
-			System.out.println("º»ÀÎÀÌ¾Æ´Ô1");
-			return "redirect:/index";
+			//System.out.println("ï¿½ï¿½ï¿½ï¿½ï¿½Ì¾Æ´ï¿½1");
+			return "redirect:/springwebprj/index";
 		} finally {
 			try { if(conn != null) conn.close(); } catch (Exception e) { e.printStackTrace();}
 			try { if(pstmt != null) pstmt.close(); } catch (Exception e) { e.printStackTrace();}
@@ -111,9 +121,35 @@ public class DbController {
 
 		}
 		else {
-			System.out.println("º»ÀÎÀÌ¾Æ´Ô2");
+			//System.out.println("ï¿½ï¿½ï¿½ï¿½ï¿½Ì¾Æ´ï¿½2");
 		}
-		return "redirect:/index";
+		return "redirect:/springwebprj/index";
+	}
+	
+	@RequestMapping("bbsAlterAction")
+	public String BbsAlterAction(HttpServletRequest request, HttpServletResponse response, Model model, HttpSession session) throws IOException {
+		String SQL = "UPDATE BBSTEST SET content = ?, title = ? WHERE BBSID = ?";
+		
+		try {
+			conn = dataSource.getConnection();
+			pstmt = conn.prepareStatement(SQL);
+			pstmt.setString(1, request.getParameter("Content"));
+			pstmt.setString(2, request.getParameter("Title"));
+			pstmt.setInt(3, Integer.parseInt(request.getParameter("bbsid")));
+			pstmt.executeUpdate();
+			model.addAttribute("msg", request.getParameter("bbsid"));
+			return "redirct:/index";
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			model.addAttribute("msg", "failure");
+			//System.out.println("ï¿½ï¿½ï¿½ï¿½ï¿½Ì¾Æ´ï¿½1");
+			return "redirect:/index";
+		} finally {
+			try { if(conn != null) conn.close(); } catch (Exception e) { e.printStackTrace();}
+			try { if(pstmt != null) pstmt.close(); } catch (Exception e) { e.printStackTrace();}
+			try { if(rs != null) rs.close(); } catch (Exception e) { e.printStackTrace();}
+		}
 	}
 	
 	@RequestMapping("/dbTest.do3")
@@ -130,7 +166,7 @@ public class DbController {
 			pstmt.setString(5, httpServletRequest.getParameter("userEmail"));
 			pstmt.executeUpdate();
 
-			model.addAttribute("ts", "È®ÀÎ");
+			//model.addAttribute("ts", "È®ï¿½ï¿½");
 		} catch (Exception e) {
 			e.printStackTrace();
 
@@ -157,7 +193,7 @@ public class DbController {
 					model.addAttribute("userPassword", rs.getString("userPassword"));
 				}
 			}
-			model.addAttribute("ts", "È®ÀÎ");
+			//model.addAttribute("ts", "È®ï¿½ï¿½");
 		} catch (Exception e) {
 			e.printStackTrace();
 

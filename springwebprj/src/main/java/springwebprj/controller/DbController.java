@@ -94,6 +94,12 @@ public class DbController {
 		return "bbsview";
 	}
 	
+	@RequestMapping("bbswrite")
+	public String bbswrite(HttpServletRequest request, HttpServletResponse response, Model model, HttpSession session)
+	{
+		model.addAttribute("userid",request.getParameter("userId"));
+		return "bbswrite";
+	}
 	
 	@RequestMapping("bbsDeleteAction")
 	public String BbsDeleteAction(HttpServletRequest request, HttpServletResponse response, Model model, HttpSession session) throws IOException {
@@ -221,6 +227,58 @@ public class DbController {
 			model.addAttribute("ts1", httpServletRequest.getParameter("Title"));
 			model.addAttribute("ts2", httpServletRequest.getParameter("Content"));
 			model.addAttribute("ts3", httpServletRequest.getParameter("favoriteOsNames"));
+		} catch (Exception e) {
+			e.printStackTrace();
+
+		} finally {
+			try { if(conn != null) conn.close(); } catch (Exception e) { e.printStackTrace();}
+			try { if(pstmt != null) pstmt.close(); } catch (Exception e) { e.printStackTrace();}
+			try { if(rs != null) rs.close(); } catch (Exception e) { e.printStackTrace();}
+		}
+		return "redirect:/index";
+	}
+	
+	@RequestMapping("/dbTest.do6")
+	public String dbTest6(HttpServletRequest httpServletRequest,HttpSession session, Model model) {
+		String SQL = "INSERT INTO BBSTEST (id, title, content) VALUES (?,?,?)";
+
+		try {
+			conn = dataSource.getConnection();
+			pstmt = conn.prepareStatement(SQL);
+			pstmt.setString(1, (String)session.getAttribute("sessiontest"));
+			pstmt.setString(2, httpServletRequest.getParameter("Title"));
+			pstmt.setString(3, httpServletRequest.getParameter("Content"));
+			pstmt.executeUpdate();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+
+		} finally {
+			try { if(conn != null) conn.close(); } catch (Exception e) { e.printStackTrace();}
+			try { if(pstmt != null) pstmt.close(); } catch (Exception e) { e.printStackTrace();}
+			try { if(rs != null) rs.close(); } catch (Exception e) { e.printStackTrace();}
+		}
+		return "redirect:/index";
+	}
+	
+	@RequestMapping("/dbTest.do7")
+	public String dbTest7(HttpServletRequest request,HttpSession session, Model model) {
+		String SQL = "INSERT INTO BBSTEST (id, title, content) VALUES (?,?,?)";
+		String content = "무산소 "+request.getParameter("health1") +" : "+ request.getParameter("h1-1") +" X "+ request.getParameter("h1-2") +" ";
+		String content2 = request.getParameter("health2") +" : "+ request.getParameter("h2-1") +" X "+ request.getParameter("h2-2") + " ";
+		String content3 = request.getParameter("health3") +" : "+ request.getParameter("h3-1") +" X "+ request.getParameter("h3-2") + " ";
+		String content4 = request.getParameter("health4") +" : "+ request.getParameter("h4-1") +" X "+ request.getParameter("h4-2") + " ";
+		String content5 = request.getParameter("health5") +" : "+ request.getParameter("h5-1") +" X "+ request.getParameter("h5-2") + " ";
+		String content6 = request.getParameter("health6");
+		String contentall = content+content2+content3+content4+content5+content6;
+		try {
+			conn = dataSource.getConnection();
+			pstmt = conn.prepareStatement(SQL);
+			pstmt.setString(1, (String)session.getAttribute("sessiontest"));
+			pstmt.setString(2, request.getParameter("Title"));
+			pstmt.setString(3, contentall);
+			pstmt.executeUpdate();
+
 		} catch (Exception e) {
 			e.printStackTrace();
 

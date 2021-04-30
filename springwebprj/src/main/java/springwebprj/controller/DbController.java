@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -17,6 +18,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import springwebprj.main.HealthDTO;
 import springwebprj.main.Test;
 
 @Controller
@@ -160,33 +162,6 @@ public class DbController {
 			try { if(rs != null) rs.close(); } catch (Exception e) { e.printStackTrace();}
 		}
 		return "redirect:/index";
-	}
-	
-	@RequestMapping("/dbTest.do4")
-	public String dbTest4(Model model) {
-		String SQL = "SELECT * FROM USER WHERE userID = ?";
-
-		try {
-			conn = dataSource.getConnection();
-			pstmt = conn.prepareStatement(SQL);
-			pstmt.setString(1, "1234");
-			rs = pstmt.executeQuery();
-			if(rs.next()) {
-				if(rs.getString(1).equals("1234")) {
-					model.addAttribute("userID", rs.getString("userID"));
-					model.addAttribute("userPassword", rs.getString("userPassword"));
-				}
-			}
-			//model.addAttribute("ts", "Ȯ��");
-		} catch (Exception e) {
-			e.printStackTrace();
-
-		} finally {
-			try { if(conn != null) conn.close(); } catch (Exception e) { e.printStackTrace();}
-			try { if(pstmt != null) pstmt.close(); } catch (Exception e) { e.printStackTrace();}
-			try { if(rs != null) rs.close(); } catch (Exception e) { e.printStackTrace();}
-		}
-		return "test";
 	}
 	
 	@RequestMapping("/bbsWrite")

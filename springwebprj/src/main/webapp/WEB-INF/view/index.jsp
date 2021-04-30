@@ -80,13 +80,13 @@
 	</c:choose>
 	
 	<section class="container"> <!-- html5에서 사용하는거고 본문같은거 담을때 사용함 -->
-		<form method="get" action="/springwebprj/index" class="form-inline mt-3">
-			<select name="lectureDivide" class="form-control mx-1 mt-2">
+		<form method="get" action="" class="form-inline mt-3">
+<!-- 			<select name="lectureDivide" class="form-control mx-1 mt-2">
 				<option value="전체">전체</option>
 				<option value="전공">전공</option>
 				<option value="교양">교양</option>
 				<option value="기타">기타</option>
-			</select>
+			</select> -->
 			
 			<select name="searchType" class="form-control mx-1 mt-2">
 				<option value="최신순">최신순</option>
@@ -94,6 +94,7 @@
 			</select>
 			<input type="text" name="search" class="form-control mx-1 mt-2" placeholder="내용을 입력하세요.">
 			<button type="submit" class="btn btn-primary mx-1 mt-2">검색</button>
+			
 			<c:if test ="${sessiontest != null }">
 			<!-- <a class="btn btn-primary mx-1 mt-2" data-toggle="modal" href="#registerModal">등록하기</a> modal은 웹페이지의 위쪽에 등장하는 하나의 등록양식과같은 특이한거 -->
 			<a class="btn btn-primary mx-1 mt-2" href="/springwebprj/db/bbswrite?userId=sessiontest">등록하기</a>

@@ -108,13 +108,14 @@
 			<div class="row">
 				<div class="col-8 text-left">제목 : ${test.title}, 작성자 : ${test.id}</div>
 				<div class="col-4 text-left">
-					<span style="color : red;">${test.bbsid} 번 게시물</span>
+					<span>${test.bbsid} 번 게시물</span>
+					<span style="color : red;">작성시간 : ${test.nowtime}</span>
 				</div>
 			</div>
 		</div>
 		<div class="card-body">
 			<h5 class="card-title">
-				&nbsp;<small>작성자 : ${test.id}</small>
+				&nbsp;<small></small>
 			</h5>
 			<p>내용</p>
 			<p class="card-text">${test.content}</p>
@@ -178,11 +179,11 @@
 
 						<div class="form-group">
 							<label>제목</label>
-							<input type="text" name="Title" class="form-control" maxlength="30">
+							<input type="text" id="Title" name="Title" class="form-control" maxlength="30">
 						</div>
 						<div class="form-group">
 							<label>내용</label>
-							<textarea name="Content" class="form-control" maxlength="2048" style="height : 180px;"></textarea>
+							<textarea name="Content" id="Content" class="form-control" maxlength="2048" style="height : 180px;"></textarea>
 						</div>
 
 						<div class="modal-footer">
@@ -261,16 +262,17 @@
 	$(document).ready(function(e){
 		$('#modalsubmit').click(function(){
 
-/* 			// 입력 값 체크
-			if($.trim($('#userId').val()) == ''){
-				alert("아이디를 입력해 주세요.");
-				$('#userId').focus();
+		// 입력 값 체크
+			if($.trim($('#Title').val()) == ''){
+				alert("제목을 입력해 주세요.");
+				$('#Title').focus();
 				return;
-			}else if($.trim($('#passwd').val()) == ''){
-				alert("패스워드를 입력해 주세요.");
-				$('#passwd').focus();
+			}else if($.trim($('#Content').val()) == ''){
+				alert("내용을 입력해 주세요.");
+				$('#Content').focus();
 				return;
-			} */
+			} 
+			
 			
 			alert("등록이 완료되었습니다.");
 			return;

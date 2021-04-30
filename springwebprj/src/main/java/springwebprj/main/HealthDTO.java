@@ -7,6 +7,7 @@ public class HealthDTO {
 	private String title;
 	private String content;
 	private int bbsav;
+	private String nowtime;
 	public int getBbsid() {
 		return bbsid;
 	}
@@ -38,21 +39,29 @@ public class HealthDTO {
 	public void setBbsav(int bbsav) {
 		this.bbsav = bbsav;
 	}
+	
+	
+
+	public String getNowtime() {
+		return nowtime;
+	}
+	public void setNowtime(String nowtime) {
+		this.nowtime = nowtime;
+	}
 	public HealthDTO() {
 		
 	}
 	
-	public HealthDTO(int bbsid, String id, String title, String content, int bbsav) {
+	public HealthDTO(int bbsid, String id, String title, String content, int bbsav, String nowtime) {
 		super();
 		this.bbsid = bbsid;
 		this.id = id;
 		this.title = title;
 		this.content = content;
 		this.bbsav = bbsav;
+		this.nowtime = nowtime;
 	}
-	
 
-	
 
 	
 	

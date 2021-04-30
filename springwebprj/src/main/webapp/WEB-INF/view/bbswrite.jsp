@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="java.io.PrintWriter" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
@@ -7,6 +8,11 @@
 <meta charset="UTF-8">
 <title>양티의 스프링 연습 헬스작성표</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!-- 부트스트랩 CSs 추가하기 -->
+<link rel="stylesheet" href="./css/bootstrap.min.css">
+<!-- 커스텀 CSS 추가하기 -->
+<link rel="stylesheet" href="./css/custom.css">
+<!-- 부트스트랩 -->
 <!-- 부트스트랩 -->
 <link rel="stylesheet"
 	href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
@@ -82,11 +88,11 @@
 	
 	<div class="container">
 	<div class="row">
-	<form method="post" action="/springwebprj/db/dbTest.do7?bbsid=${bbsid}">
+	<form id="writeFrm" name="writeFrm" method="post" action="/springwebprj/db/dbTest.do7?bbsid=${bbsid}">
 			<div>
 			<div class="form-group">
 				<label>제목</label>
-				<input type="text" name="Title" class="form-control" maxlength="30">
+				<input type="text" id= "Title" name="Title" class="form-control" maxlength="30">
 			</div>
 <!-- 			<div class="form-group">
 				<label>내용</label>
@@ -166,43 +172,11 @@
 		</div>
 		
 		
-		<input type="submit" class="btn btn-primary pull-right" value="글쓰기">
+		<input type="submit" id="write" class="btn btn-primary pull-right" value="글쓰기">
 	</form>
 
 	</div>
 	</div>
-
-
-<%-- 	<div class="modal fade" id="AlterModal" tabindex="-1" role="dialog" aria-labelledby="modal" aria-hidden="true">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title" id="modal"></h5>
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-				</div>
-				<div class="modal-body">
-					<form action="/springwebprj/db/bbsAlterAction?bbsid=${test.bbsid}" method="post">
-
-						<div class="form-group">
-							<label>제목</label>
-							<input type="text" name="Title" class="form-control" maxlength="30" placeholder="내용을입력하세요">
-						</div>
-						<div class="form-group">
-							<label>내용</label>
-							<textarea name="Content" class="form-control" maxlength="2048" placeholder="내용을 입력하세요" style="height : 180px;" ></textarea>
-						</div>
-
-						<div class="modal-footer">
-							<button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
-							<button type="submit" class="btn btn-primary">수정하기</button>
-						</div>
-					</form>
-				</div>
-			</div>
-		</div>
-	</div> --%>
 
 
 	<footer class="bg-dark mt-4 p-5 text-center" style="color: #FFFFFF;">
@@ -214,24 +188,30 @@
 		src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"
 		integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns"
 		crossorigin="anonymous"></script>
+			<!-- 제이쿼리 자바스크립트 추가하기 -->
+	<script src ="./js/jquery.min.js"></script>
+	<!-- 파퍼 자바스크립트 추가하기 -->
+	<script src ="./js/pooper.min.js"></script>
+	<!-- 부트스트랩 자바스크립트 추가하기 -->
+	<script src ="./js/bootstrap.min.js"></script>
 </body>
 <!-- <script type="text/javascript">
 	$(document).ready(function(e){
-		$('#alterbutton').click(function(){
+		$('#write').click(function(){
 
 			// 입력 값 체크
-			if($.trim($('#userId').val()) == ''){
-				alert("아이디를 입력해 주세요.");
-				$('#userId').focus();
+			if($.trim($('#Title').val()) == ''){
+				alert("제목을 입력해 주세요. (공백불가)");
+				$('#Title').focus();
 				return;
-			}else if($.trim($('#passwd').val()) == ''){
+			}/* else if($.trim($('#passwd').val()) == ''){
 				alert("패스워드를 입력해 주세요.");
 				$('#passwd').focus();
-				return;
+				return; */
 			}
 			
 			//전송
-			$('#loginFrm').submit();
+			$('#writeFrm').submit();
 		});
 		
 	});

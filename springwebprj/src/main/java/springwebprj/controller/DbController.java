@@ -263,7 +263,7 @@ public class DbController {
 	
 	@RequestMapping("/dbTest.do7")
 	public String dbTest7(HttpServletRequest request,HttpSession session, Model model) {
-		String SQL = "INSERT INTO BBSTEST (id, title, content) VALUES (?,?,?)";
+		String SQL = "INSERT INTO BBSTEST (id, title, content, nowtime) VALUES (?,?,?, NOW())";
 		String content = "무산소 "+request.getParameter("health1") +" : "+ request.getParameter("h1-1") +" X "+ request.getParameter("h1-2") +" ";
 		String content2 = request.getParameter("health2") +" : "+ request.getParameter("h2-1") +" X "+ request.getParameter("h2-2") + " ";
 		String content3 = request.getParameter("health3") +" : "+ request.getParameter("h3-1") +" X "+ request.getParameter("h3-2") + " ";

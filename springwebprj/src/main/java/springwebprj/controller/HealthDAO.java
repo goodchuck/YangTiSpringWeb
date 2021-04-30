@@ -30,14 +30,14 @@ public class HealthDAO {
 	AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext(Config.class);
 	
 	public ArrayList<HealthDTO> select() {
-		String SQL = "SELECT * FROM BBSTEST ORDER BY bbsid desc";
+		String SQL = "SELECT * FROM BBS ORDER BY bbsid desc";
 		ArrayList<HealthDTO> hd = new ArrayList<HealthDTO>();
 		try {
 			conn = dataSource.getConnection();
 			pstmt = conn.prepareStatement(SQL);
 			rs = pstmt.executeQuery();
 			while(rs.next()) {
-				hd.add(new HealthDTO(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getInt(5)));
+				hd.add(new HealthDTO(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getInt(5),rs.getString(6)));
 			}
 			return hd;
 		} catch (Exception e) {

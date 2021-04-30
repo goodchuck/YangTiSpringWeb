@@ -88,7 +88,7 @@
 	
 	<div class="container">
 	<div class="row">
-	<form id="writeFrm" name="writeFrm" method="post" action="/springwebprj/db/dbTest.do7?bbsid=${bbsid}">
+	<form id="writeFrm" name="writeFrm" method="post" action="/springwebprj/db/bbsWrite?bbsid=${bbsid}">
 			<div>
 			<div class="form-group">
 				<label>제목</label>

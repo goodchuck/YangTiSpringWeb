@@ -76,7 +76,7 @@
 
 	<section class="container mt-3" style="max-width: 560px;">
 		<!-- html5에서 사용하는거고 본문같은거 담을때 사용함 -->
-		<form id="joinFrm" name= "joinFrm" method="post" action="/springwebprj/db/dbTest.do3">
+		<form id="joinFrm" name= "joinFrm" method="post" action="/springwebprj/db/userJoinAction">
 			<div class="form-group">
 				<label>아이디</label> 
 				<input type="text" id="userID" name="userID"

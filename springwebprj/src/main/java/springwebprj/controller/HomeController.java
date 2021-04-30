@@ -43,21 +43,7 @@ public class HomeController {
 
 	AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext(Config.class);
 
-	
-//	@ModelAttribute("loginTypes")
-//	protected List<String> referenceData() throws Exception {
-//		List<String> loginTypes = new ArrayList<String>();
-//		loginTypes.add("�Ϲ�ȸ��");
-//		loginTypes.add("���ȸ��");
-//		loginTypes.add("�������ȸ��");
-//		return loginTypes;
-//	}
-	
-	/*
-	 * Test test20 = ctx.getBean(Test.class); MemberRegistRequest mrr =
-	 * ctx.getBean(MemberRegistRequest.class);
-	 */
-	
+
 	Connection conn = null;
 	PreparedStatement pstmt = null;
 	ResultSet rs = null;
@@ -66,17 +52,10 @@ public class HomeController {
 	@RequestMapping("index")
 	public String index(HttpServletRequest request, Model model) {
 		
-//		test20.setTest1("1");
-//		test20.setTest2("2");
-//		model.addAttribute("test20", test20);
-		//List<String> nameList = new ArrayList<String>(Arrays.asList("ȫ�浿", "��ö��", "�ڿ���"));
+
 		ArrayList<HealthDTO> hd = new ArrayList<HealthDTO>();
-		//HealthDTO dto = new HealthDTO();
-		//model.addAttribute("nameList", nameList);
-		//HealthDAO healthdao = new HealthDAO();
-		//mrr.setFavoriteOs(new String[] {"�����","�����"});
-		//model.addAttribute("favoriteOsNames", mrr.getFavoriteOs());
-		String SQL = "SELECT * FROM BBSTEST ORDER BY bbsid desc";
+
+		String SQL = "SELECT * FROM BBS ORDER BY bbsid desc";
 
 		try {
 			conn = dataSource.getConnection();
@@ -95,9 +74,6 @@ public class HomeController {
 			try { if(pstmt != null) pstmt.close(); } catch (Exception e) { e.printStackTrace();}
 			try { if(rs != null) rs.close(); } catch (Exception e) { e.printStackTrace();}
 		}
-		
-		//model.addAttribute("testarray",healthdao.select());
-
 		
 		return "index";
 	}

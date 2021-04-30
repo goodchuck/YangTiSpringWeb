@@ -84,21 +84,7 @@
 		
 		
 	</section>
-	<c:choose>
 
-	<c:when test="${msg == 'failure'}">
-		<div style="color: red">
-			아이디 또는 비밀번호가 일치하지 않습니다.
-		</div>
-	</c:when>
-	
-	<c:when test="${msg == null}">
-		<div style="color: red">
-			아무것도 없습니다.
-		</div>
-	</c:when>
-	
-	</c:choose>
 	
 	<footer class="bg-dark mt-4 p-5 text-center" style="color: #FFFFFF;">
 		Copyright &copy; 2021 양태현 All Rights Reserved. 

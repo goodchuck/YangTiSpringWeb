@@ -40,7 +40,18 @@ public class DbController {
 	public DbController(DataSource dataSource) {
 		jdbcTemplate = new JdbcTemplate(dataSource);
 	}
-	
+	public int update(String bc, String tt, int bi) {
+		return jdbcTemplate.update("update bbs set content =?,title=? where bbsid = ?",bc,tt,bi);
+	}
+	public int delete(int bbsid) {
+		return jdbcTemplate.update("update bbs set bbsav = 0 where bbsid = ?",bbsid);
+	}
+	public int insert(String id, String title, String content) {
+		return jdbcTemplate.update("insert into bbs (id, title, content, nowtime) values(?,?,?,now())",id,title,content);
+	}
+	public int userjoin(String id, String pw, String name, String gender, String email) {
+		return jdbcTemplate.update("insert into user values (?,?,?,?,?)",id,pw,name,gender,email);
+	}
 	
 	Connection conn = null;
 	PreparedStatement pstmt = null;
@@ -99,27 +110,27 @@ public class DbController {
 	public String BbsDeleteAction(HttpServletRequest request, HttpServletResponse response, Model model, HttpSession session) throws IOException {
 		System.out.println(request.getParameter("sid"));
 		if(request.getParameter("userid").equals(request.getParameter("sid"))) {
-		String SQL = "UPDATE bbs SET BBSAV = 0 WHERE BBSID = ?";
-		
-		try {
-			conn = dataSource.getConnection();
-			pstmt = conn.prepareStatement(SQL);
-			pstmt.setInt(1, Integer.parseInt(request.getParameter("bbsid")));
-			pstmt.executeUpdate();
-			model.addAttribute("msg", request.getParameter("bbsid"));
-			return "redirect:/index";
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-			model.addAttribute("msg", "failure");
-			//System.out.println("�����̾ƴ�1");
-			return "redirect:/index";
-		} finally {
-			try { if(conn != null) conn.close(); } catch (Exception e) { e.printStackTrace();}
-			try { if(pstmt != null) pstmt.close(); } catch (Exception e) { e.printStackTrace();}
-			try { if(rs != null) rs.close(); } catch (Exception e) { e.printStackTrace();}
-		}
-
+//		String SQL = "UPDATE bbs SET BBSAV = 0 WHERE BBSID = ?";
+//		
+//		try {
+//			conn = dataSource.getConnection();
+//			pstmt = conn.prepareStatement(SQL);
+//			pstmt.setInt(1, Integer.parseInt(request.getParameter("bbsid")));
+//			pstmt.executeUpdate();
+//			model.addAttribute("msg", request.getParameter("bbsid"));
+//			return "redirect:/index";
+//			
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//			model.addAttribute("msg", "failure");
+//			//System.out.println("�����̾ƴ�1");
+//			return "redirect:/index";
+//		} finally {
+//			try { if(conn != null) conn.close(); } catch (Exception e) { e.printStackTrace();}
+//			try { if(pstmt != null) pstmt.close(); } catch (Exception e) { e.printStackTrace();}
+//			try { if(rs != null) rs.close(); } catch (Exception e) { e.printStackTrace();}
+//		}
+			delete(Integer.parseInt(request.getParameter("bbsid")));
 		}
 		else {
 		}
@@ -128,59 +139,62 @@ public class DbController {
 	
 	@RequestMapping("bbsAlterAction")
 	public String BbsAlterAction(HttpServletRequest request, HttpServletResponse response, Model model, HttpSession session) throws IOException {
-		String SQL = "UPDATE bbs SET content = ?, title = ? WHERE BBSID = ?";
-		
-		try {
-			conn = dataSource.getConnection();
-			pstmt = conn.prepareStatement(SQL);
-			pstmt.setString(1, request.getParameter("bbsContent"));
-			pstmt.setString(2, request.getParameter("bbsTitle"));
-			pstmt.setInt(3, Integer.parseInt(request.getParameter("bbsid")));
-			pstmt.executeUpdate();
-			model.addAttribute("msg", request.getParameter("bbsid"));
-			return "redirect:/index";
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-			model.addAttribute("msg", "failure");
-			//System.out.println("�����̾ƴ�1");
-			return "redirect:/index";
-		} finally {
-			try { if(conn != null) conn.close(); } catch (Exception e) { e.printStackTrace();}
-			try { if(pstmt != null) pstmt.close(); } catch (Exception e) { e.printStackTrace();}
-			try { if(rs != null) rs.close(); } catch (Exception e) { e.printStackTrace();}
-		}
+//		String SQL = "UPDATE bbs SET content = ?, title = ? WHERE BBSID = ?";
+//		
+//		try {
+//			conn = dataSource.getConnection();
+//			pstmt = conn.prepareStatement(SQL);
+//			pstmt.setString(1, request.getParameter("bbsContent"));
+//			pstmt.setString(2, request.getParameter("bbsTitle"));
+//			pstmt.setInt(3, Integer.parseInt(request.getParameter("bbsid")));
+//			pstmt.executeUpdate();
+//			model.addAttribute("msg", request.getParameter("bbsid"));
+//			return "redirect:/index";
+//			
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//			model.addAttribute("msg", "failure");
+//			//System.out.println("�����̾ƴ�1");
+//			return "redirect:/index";
+//		} finally {
+//			try { if(conn != null) conn.close(); } catch (Exception e) { e.printStackTrace();}
+//			try { if(pstmt != null) pstmt.close(); } catch (Exception e) { e.printStackTrace();}
+//			try { if(rs != null) rs.close(); } catch (Exception e) { e.printStackTrace();}
+//		}
+		update(request.getParameter("bbsContent"),request.getParameter("bbsTitle"),Integer.parseInt(request.getParameter("bbsid")));
+		return "redirect:/index";
 	}
-	
+
 	@RequestMapping("/userJoinAction")
-	public String dbTest3(HttpServletRequest httpServletRequest, Model model) {
-		String SQL = "INSERT INTO USER VALUES (?,?,?,?,?)";
-
-		try {
-			conn = dataSource.getConnection();
-			pstmt = conn.prepareStatement(SQL);
-			pstmt.setString(1, httpServletRequest.getParameter("userID"));
-			pstmt.setString(2, httpServletRequest.getParameter("userPassword"));
-			pstmt.setString(3, httpServletRequest.getParameter("userName"));
-			pstmt.setString(4, httpServletRequest.getParameter("userGender"));
-			pstmt.setString(5, httpServletRequest.getParameter("userEmail"));
-			pstmt.executeUpdate();
-
-			//model.addAttribute("ts", "Ȯ��");
-		} catch (Exception e) {
-			e.printStackTrace();
-
-		} finally {
-			try { if(conn != null) conn.close(); } catch (Exception e) { e.printStackTrace();}
-			try { if(pstmt != null) pstmt.close(); } catch (Exception e) { e.printStackTrace();}
-			try { if(rs != null) rs.close(); } catch (Exception e) { e.printStackTrace();}
-		}
+	public String dbTest3(HttpServletRequest request, Model model) {
+//		String SQL = "INSERT INTO USER VALUES (?,?,?,?,?)";
+//
+//		try {
+//			conn = dataSource.getConnection();
+//			pstmt = conn.prepareStatement(SQL);
+//			pstmt.setString(1, request.getParameter("userID"));
+//			pstmt.setString(2, request.getParameter("userPassword"));
+//			pstmt.setString(3, request.getParameter("userName"));
+//			pstmt.setString(4, request.getParameter("userGender"));
+//			pstmt.setString(5, request.getParameter("userEmail"));
+//			pstmt.executeUpdate();
+//
+//			//model.addAttribute("ts", "Ȯ��");
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//
+//		} finally {
+//			try { if(conn != null) conn.close(); } catch (Exception e) { e.printStackTrace();}
+//			try { if(pstmt != null) pstmt.close(); } catch (Exception e) { e.printStackTrace();}
+//			try { if(rs != null) rs.close(); } catch (Exception e) { e.printStackTrace();}
+//		}
+		userjoin(request.getParameter("userID"),request.getParameter("userPassword"),request.getParameter("userName"),request.getParameter("userGender"),request.getParameter("userEmail"));
 		return "redirect:/index";
 	}
 	
 	@RequestMapping("/bbsWrite")
 	public String dbTest7(HttpServletRequest request,HttpSession session, Model model) {
-		String SQL = "INSERT INTO bbs (id, title, content, nowtime) VALUES (?,?,?, NOW())";
+//		String SQL = "INSERT INTO bbs (id, title, content, nowtime) VALUES (?,?,?, NOW())";
 		String content = "무산소 "+request.getParameter("health1") +" : "+ request.getParameter("h1-1") +" X "+ request.getParameter("h1-2") +" ";
 		String content2 = request.getParameter("health2") +" : "+ request.getParameter("h2-1") +" X "+ request.getParameter("h2-2") + " ";
 		String content3 = request.getParameter("health3") +" : "+ request.getParameter("h3-1") +" X "+ request.getParameter("h3-2") + " ";
@@ -188,22 +202,23 @@ public class DbController {
 		String content5 = request.getParameter("health5") +" : "+ request.getParameter("h5-1") +" X "+ request.getParameter("h5-2") + " ";
 		String content6 = request.getParameter("health6");
 		String contentall = content+content2+content3+content4+content5+content6;
-		try {
-			conn = dataSource.getConnection();
-			pstmt = conn.prepareStatement(SQL);
-			pstmt.setString(1, (String)session.getAttribute("sessiontest"));
-			pstmt.setString(2, request.getParameter("Title"));
-			pstmt.setString(3, contentall);
-			pstmt.executeUpdate();
-
-		} catch (Exception e) {
-			e.printStackTrace();
-
-		} finally {
-			try { if(conn != null) conn.close(); } catch (Exception e) { e.printStackTrace();}
-			try { if(pstmt != null) pstmt.close(); } catch (Exception e) { e.printStackTrace();}
-			try { if(rs != null) rs.close(); } catch (Exception e) { e.printStackTrace();}
-		}
+//		try {
+//			conn = dataSource.getConnection();
+//			pstmt = conn.prepareStatement(SQL);
+//			pstmt.setString(1, (String)session.getAttribute("sessiontest"));
+//			pstmt.setString(2, request.getParameter("Title"));
+//			pstmt.setString(3, contentall);
+//			pstmt.executeUpdate();
+//
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//
+//		} finally {
+//			try { if(conn != null) conn.close(); } catch (Exception e) { e.printStackTrace();}
+//			try { if(pstmt != null) pstmt.close(); } catch (Exception e) { e.printStackTrace();}
+//			try { if(rs != null) rs.close(); } catch (Exception e) { e.printStackTrace();}
+//		}
+		insert((String)session.getAttribute("sessiontest"),request.getParameter("Title"),contentall);
 		return "redirect:/index";
 	}
 }

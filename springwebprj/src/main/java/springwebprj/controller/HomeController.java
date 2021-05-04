@@ -13,12 +13,14 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.sql.DataSource;
 
 import java.sql.PreparedStatement;
 
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -46,37 +48,56 @@ public class HomeController {
 
 	AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext(Config.class);
 
-
-	Connection conn = null;
-	PreparedStatement pstmt = null;
-	ResultSet rs = null;
+	private JdbcTemplate jdbcTemplate;
 	
+	public HomeController(DataSource dataSource) {
+		jdbcTemplate = new JdbcTemplate(dataSource);
+	}
+	
+	private HealthDTORowMapper healthDTORowMapper = new HealthDTORowMapper();
+	
+	
+//	Connection conn = null;
+//	PreparedStatement pstmt = null;
+//	ResultSet rs = null;
+	
+
+	public List<HealthDTO> select() {
+		List<HealthDTO> hd = jdbcTemplate.query("select * from bbs order by bbsid desc",
+				healthDTORowMapper
+				);
+		return hd;
+	}
 	
 	@RequestMapping("index")
 	public String index(HttpServletRequest request, Model model) {
 		
 
-		ArrayList<HealthDTO> hd = new ArrayList<HealthDTO>();
-
-		String SQL = "SELECT * FROM BBS ORDER BY bbsid desc";
-
-		try {
-			conn = dataSource.getConnection();
-			pstmt = conn.prepareStatement(SQL);
-			rs = pstmt.executeQuery();
-			while(rs.next()) {
-				hd.add(new HealthDTO(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getInt(5),rs.getString(6)));
-				model.addAttribute("testarray", hd);
-			}
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-
-		} finally {
-			try { if(conn != null) conn.close(); } catch (Exception e) { e.printStackTrace();}
-			try { if(pstmt != null) pstmt.close(); } catch (Exception e) { e.printStackTrace();}
-			try { if(rs != null) rs.close(); } catch (Exception e) { e.printStackTrace();}
-		}
+		
+		model.addAttribute("testarray",select());
+//		ArrayList<HealthDTO> hd = new ArrayList<HealthDTO>();
+//
+//		String SQL = "SELECT * FROM BBS ORDER BY bbsid desc";
+//
+//		try {
+//			conn = dataSource.getConnection();
+//			pstmt = conn.prepareStatement(SQL);
+//			rs = pstmt.executeQuery();
+//			while(rs.next()) {
+//				hd.add(new HealthDTO(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getInt(5),rs.getString(6)));
+//				model.addAttribute("testarray", hd);
+//			}
+//			
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//
+//		} finally {
+//			try { if(conn != null) conn.close(); } catch (Exception e) { e.printStackTrace();}
+//			try { if(pstmt != null) pstmt.close(); } catch (Exception e) { e.printStackTrace();}
+//			try { if(rs != null) rs.close(); } catch (Exception e) { e.printStackTrace();}
+//		}
+		
+		
 		
 		return "index";
 	}

@@ -9,14 +9,18 @@ import java.util.ArrayList;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.sql.DataSource;
 
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
+
+import com.mchange.v2.c3p0.ComboPooledDataSource;
 
 import springwebprj.main.HealthDTO;
 import springwebprj.main.Test;
@@ -26,8 +30,18 @@ import springwebprj.main.Test;
 public class DbController {
 
 	@Autowired
-	BasicDataSource dataSource;
-		
+	ComboPooledDataSource dataSource;
+	//BasicDataSource dataSource;
+	
+	
+	
+	private JdbcTemplate jdbcTemplate;
+	
+	public DbController(DataSource dataSource) {
+		jdbcTemplate = new JdbcTemplate(dataSource);
+	}
+	
+	
 	Connection conn = null;
 	PreparedStatement pstmt = null;
 	ResultSet rs = null;

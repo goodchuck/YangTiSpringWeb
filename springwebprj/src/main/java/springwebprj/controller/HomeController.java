@@ -26,6 +26,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import com.mchange.v2.c3p0.ComboPooledDataSource;
+
 import springwebprj.main.Config;
 import springwebprj.main.HealthDTO;
 import springwebprj.main.MemberRegistRequest;
@@ -37,8 +39,9 @@ import springwebprj.main.Test;
 public class HomeController {
 
 
-	@Autowired 
-	BasicDataSource dataSource;
+	@Autowired
+	ComboPooledDataSource dataSource;
+	//BasicDataSource dataSource;
 
 
 	AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext(Config.class);

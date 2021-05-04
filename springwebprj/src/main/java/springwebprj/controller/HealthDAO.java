@@ -5,11 +5,16 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
+import javax.sql.DataSource;
+
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
+
+import com.mchange.v2.c3p0.ComboPooledDataSource;
 
 import springwebprj.main.Config;
 import springwebprj.main.HealthDTO;
@@ -18,7 +23,16 @@ import springwebprj.main.HealthDTO;
 public class HealthDAO {
 	
 	@Autowired
-	BasicDataSource dataSource;
+	ComboPooledDataSource dataSource;
+	//BasicDataSource dataSource;
+	
+	
+	
+	private JdbcTemplate jdbcTemplate;
+	
+	public HealthDAO(DataSource dataSource) {
+		jdbcTemplate = new JdbcTemplate(dataSource);
+	}
 	
 	
 	Connection conn = null;
@@ -28,6 +42,14 @@ public class HealthDAO {
 
 	
 	AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext(Config.class);
+	
+	public ArrayList<HealthDTO> select2() {
+		ArrayList<HealthDTO> hd = new ArrayList<HealthDTO>();
+		
+		
+		return hd;
+	}
+	
 	
 	public ArrayList<HealthDTO> select() {
 		String SQL = "SELECT * FROM BBS ORDER BY bbsid desc";

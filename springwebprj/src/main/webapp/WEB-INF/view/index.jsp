@@ -1,18 +1,45 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib  prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ page import="java.util.*"%>
+<%@ page import="java.io.PrintWriter" %> <!-- 한글 깨짐 방지를 위한 초반 작업 -->
+<%
+	request.setCharacterEncoding("UTF-8");
+%> <!-- 건너오는 모든데이터를 utf-8로 받게끔 -->
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
+<meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>양티의 스프링 연습 헬스작성표</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <!-- 부트스트랩 -->
-<link rel="stylesheet"
-	href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
-	integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l"
-	crossorigin="anonymous">
-	<script src="//code.jquery.com/jquery-3.3.1.min.js"></script>
+<link rel="stylesheet" type="text/css" href="css/yang.css">
+	
+	<link rel="stylesheet" href="http://poiemaweb.com/assets/css/ajax.css">
+    <!-- 부트스트랩 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+	
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <!-- IE8 에서 HTML5 요소와 미디어 쿼리를 위한 HTML5 shim 와 Respond.js -->
+    <!-- WARNING: Respond.js 는 당신이 file:// 을 통해 페이지를 볼 때는 동작하지 않습니다. -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  	<style>
+  	h1 {
+  			color: rgb(0, 0, 0);
+			text-decoration: underline;
+  		}
+	body {
+		background-image:url('resources/images/background.png');
+		background-repeat: no-repeat;
+		background-size : cover;
+		}
+	</style>
 </head>
 <body>
 	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -78,7 +105,7 @@
 	</div>
 	</c:when>
 	</c:choose>
-	
+
 	<section class="container"> <!-- html5에서 사용하는거고 본문같은거 담을때 사용함 -->
 		<form method="get" action="" class="form-inline mt-3">
 <!-- 			<select name="lectureDivide" class="form-control mx-1 mt-2">
@@ -88,10 +115,10 @@
 				<option value="기타">기타</option>
 			</select> -->
 			
-			<select name="searchType" class="form-control mx-1 mt-2">
+<!-- 			<select name="searchType" class="form-control mx-1 mt-2">
 				<option value="최신순">최신순</option>
 				<option value="추천순">추천순</option>
-			</select>
+			</select> -->
 			<input type="text" name="search" class="form-control mx-1 mt-2" placeholder="내용을 입력하세요.">
 			<button type="submit" class="btn btn-primary mx-1 mt-2">검색</button>
 			
@@ -99,7 +126,7 @@
 			<!-- <a class="btn btn-primary mx-1 mt-2" data-toggle="modal" href="#registerModal">등록하기</a> modal은 웹페이지의 위쪽에 등장하는 하나의 등록양식과같은 특이한거 -->
 			<a class="btn btn-primary mx-1 mt-2" href="/springwebprj/db/bbswrite?userId=sessiontest">등록하기</a>
 			</c:if>
-			<a class="btn btn-danger mx-1 mt-2" data-toggle="modal" href="#reportModal">신고</a> <!-- modal은 웹페이지의 위쪽에 등장하는 하나의 등록양식과같은 특이한거 -->
+			<!-- <a class="btn btn-danger mx-1 mt-2" data-toggle="modal" href="#reportModal">신고</a> modal은 웹페이지의 위쪽에 등장하는 하나의 등록양식과같은 특이한거 -->
 		</form>
 
 	<c:forEach var="test" items="${testarray}" varStatus="status">
@@ -107,7 +134,7 @@
 			<div class="card bg-light mt-3">
 		<div class="card-header bg-light">
 			<div class="row">
-				<div class="col-8 text-left">제목 : ${test.title}, 작성자 : ${test.id}</div>
+				<div class="col-8 text-left"><b>제목 : ${test.title}</b> <small> 작성자 : ${test.id}</small></div>
 				<div class="col-4 text-left">
 					<span>${test.bbsid} 번 게시물</span>
 					<span style="color : red;">작성시간 : ${test.nowtime}</span>
@@ -116,12 +143,11 @@
 		</div>
 		<div class="card-body">
 			<h5 class="card-title">
-				&nbsp;<small></small>
+				&nbsp;<small>내용</small>
 			</h5>
-			<p>내용</p>
 			<p class="card-text">${test.content}</p>
 			<c:if test="${test.id == sessiontest}">
-			<div class="col-3 text-right">
+			<div class="col-3 text-left">
 				<!-- <a class="btn btn-primary mx-1 mt-2" id="alterbutton" data-toggle="modal" href="#AlterModal">수정하기</a> -->
 				<a onclick="return confirm('수정하시겠습니까?')" href="/springwebprj/db/bbsview?bbsid=${test.bbsid}&userid=${test.id}&sid=${sessiontest}&bbscontent=${test.content}&bbstitle=${test.title}">수정</a> 
 				<a onclick="return confirm('삭제하시겠습니까?')" href="/springwebprj/db/bbsDeleteAction?bbsid=${test.bbsid}&userid=${test.id}&sid=${sessiontest}">삭제</a>
@@ -251,13 +277,7 @@
 	</div>
 	<footer class="bg-dark mt-4 p-5 text-center" style="color: #FFFFFF;">
 		Copyright &copy; 2021 양태현 All Rights Reserved. </footer>
-	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
-		integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
-		crossorigin="anonymous"></script>
-	<script
-		src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"
-		integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns"
-		crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
 </body>
 <script type="text/javascript">
 	$(document).ready(function(e){

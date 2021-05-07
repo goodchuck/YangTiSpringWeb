@@ -1,15 +1,8 @@
-package springwebprj.controller;
+package springwebprj.main;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
+
 import java.util.List;
 
-import javax.sql.DataSource;
-
-import org.apache.commons.dbcp2.BasicDataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.support.GenericXmlApplicationContext;
@@ -21,11 +14,6 @@ import org.springframework.stereotype.Repository;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 
-import springwebprj.main.Config;
-import springwebprj.main.HealthDTO;
-import springwebprj.main.UserDTO;
-
-//@Component
 public class HealthDAO {
 	
 	@Autowired

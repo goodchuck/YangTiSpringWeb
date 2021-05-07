@@ -12,8 +12,6 @@ import org.springframework.jdbc.core.JdbcTemplate;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 
-import springwebprj.controller.HealthDAO;
-
 @Configuration
 //@ComponentScan(basePackages = "springwebprj")
 public class Config {
@@ -34,7 +32,6 @@ public class Config {
 		try {
 			datasource.setDriverClass("com.mysql.jdbc.Driver");
 		} catch (PropertyVetoException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		datasource.setJdbcUrl("jdbc:mysql://localhost:3306/yangtihealth");

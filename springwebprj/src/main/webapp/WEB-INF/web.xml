@@ -31,7 +31,8 @@
 	</init-param> -->
 	<init-param>
 		<param-name>contextConfigLocation</param-name>
-		<param-value>classpath:dispatcher-servlet.xml</param-value>
+		<!-- <param-value>classpath:dispatcher-servlet.xml</param-value> -->
+		<param-value>/WEB-INF/dispatcher-servlet.xml</param-value>
 	</init-param>
 	<load-on-startup>1</load-on-startup> <!-- 톰캣 시작될때 1넣고 하나더넣어서 2이런식으로 우선순위가능-->
 	<async-supported>true</async-supported> <!-- 비동기적 로드 -->
@@ -39,8 +40,8 @@
 <servlet-mapping>
 	<servlet-name>dispatcher</servlet-name>
 	<url-pattern>/</url-pattern>
-</servlet-mapping>
 
+</servlet-mapping>
   <display-name>Welcome to Tomcat</display-name>
   <description>
      Welcome to Tomcat

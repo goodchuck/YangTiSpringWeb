@@ -32,6 +32,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 
 import springwebprj.main.Config;
+import springwebprj.main.HealthDAO;
 import springwebprj.main.HealthDTO;
 import springwebprj.main.MemberRegistRequest;
 import springwebprj.main.Test;
@@ -41,8 +42,8 @@ import springwebprj.main.Test;
 @RequestMapping("/")
 public class HomeController {
 
-	@Autowired
-	private JdbcTemplate jdbcTemplate;
+//	@Autowired
+//	private JdbcTemplate jdbcTemplate;
 	
 	
 //	GenericXmlApplicationContext ctx2 = new GenericXmlApplicationContext("classpath:dispatcher-servlet.xml");
@@ -62,7 +63,7 @@ public class HomeController {
 //	}
 	
 	
-	private HealthDTORowMapper healthDTORowMapper = new HealthDTORowMapper();
+//	private HealthDTORowMapper healthDTORowMapper = new HealthDTORowMapper();
 	
 	
 //	Connection conn = null;
@@ -70,12 +71,12 @@ public class HomeController {
 //	ResultSet rs = null;
 	
 
-	public List<HealthDTO> select() {
-		List<HealthDTO> hd = jdbcTemplate.query("select * from bbs order by bbsid desc",
-				healthDTORowMapper
-				);
-	return hd;
-	}
+//	public List<HealthDTO> select() {
+//		List<HealthDTO> hd = jdbcTemplate.query("select * from bbs order by bbsid desc",
+//				healthDTORowMapper
+//				);
+//	return hd;
+//	}
 	
 	@RequestMapping("index")
 	public String index(HttpServletRequest request, Model model) {

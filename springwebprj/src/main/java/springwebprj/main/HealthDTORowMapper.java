@@ -1,11 +1,9 @@
-package springwebprj.controller;
+package springwebprj.main;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import org.springframework.jdbc.core.RowMapper;
-
-import springwebprj.main.HealthDTO;
 
 public class HealthDTORowMapper implements RowMapper<HealthDTO>{
 

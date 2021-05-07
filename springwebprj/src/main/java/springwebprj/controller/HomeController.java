@@ -20,6 +20,7 @@ import java.sql.PreparedStatement;
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.support.GenericXmlApplicationContext;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -40,19 +41,26 @@ import springwebprj.main.Test;
 @RequestMapping("/")
 public class HomeController {
 
-
 	@Autowired
-	ComboPooledDataSource dataSource;
-	//BasicDataSource dataSource;
-
-
-	AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext(Config.class);
-
 	private JdbcTemplate jdbcTemplate;
 	
-	public HomeController(DataSource dataSource) {
-		jdbcTemplate = new JdbcTemplate(dataSource);
-	}
+	
+//	GenericXmlApplicationContext ctx2 = new GenericXmlApplicationContext("classpath:dispatcher-servlet.xml");
+	
+	AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext(Config.class);
+	HealthDAO dao = ctx.getBean("hd",HealthDAO.class);
+
+	//Test test = ctx.getBean("test",Test.class);
+	//HealthDAO healthdao = ctx.getBean("hd", HealthDAO.class);
+
+//	public HomeController(DataSource dataSource) {
+//		jdbcTemplate = new JdbcTemplate(dataSource);
+//	}
+//	@Autowired
+//	public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
+//		this.jdbcTemplate = jdbcTemplate;
+//	}
+	
 	
 	private HealthDTORowMapper healthDTORowMapper = new HealthDTORowMapper();
 	
@@ -66,15 +74,14 @@ public class HomeController {
 		List<HealthDTO> hd = jdbcTemplate.query("select * from bbs order by bbsid desc",
 				healthDTORowMapper
 				);
-		return hd;
+	return hd;
 	}
 	
 	@RequestMapping("index")
 	public String index(HttpServletRequest request, Model model) {
 		
 
-		
-		model.addAttribute("testarray",select());
+		model.addAttribute("testarray",dao.select());
 //		ArrayList<HealthDTO> hd = new ArrayList<HealthDTO>();
 //
 //		String SQL = "SELECT * FROM BBS ORDER BY bbsid desc";

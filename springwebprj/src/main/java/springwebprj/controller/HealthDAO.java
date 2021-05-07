@@ -12,40 +12,54 @@ import javax.sql.DataSource;
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.support.GenericXmlApplicationContext;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Repository;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 
 import springwebprj.main.Config;
 import springwebprj.main.HealthDTO;
+import springwebprj.main.UserDTO;
 
-@Component
+//@Component
 public class HealthDAO {
 	
 	@Autowired
-	ComboPooledDataSource dataSource;
-	//BasicDataSource dataSource;
-	
-	
-	
 	private JdbcTemplate jdbcTemplate;
 	
-//	public HealthDAO(DataSource dataSource) {
-//		jdbcTemplate = new JdbcTemplate(dataSource);
-//	}
-	
 	private HealthDTORowMapper healthDTORowMapper = new HealthDTORowMapper();
+	private UserDTORowMapper userDTORowMapper = new UserDTORowMapper();
 	
-	Connection conn = null;
-	PreparedStatement pstmt = null;
-	ResultSet rs = null;
 	
-
+	public int update(String bc, String tt, int bi) {
+		return jdbcTemplate.update("update bbs set content =?,title=? where bbsid = ?",bc,tt,bi);
+	}
+	public int delete(int bbsid) {
+		return jdbcTemplate.update("update bbs set bbsav = 0 where bbsid = ?",bbsid);
+	}
+	public int insert(String id, String title, String content) {
+		return jdbcTemplate.update("insert into bbs (id, title, content, nowtime) values(?,?,?,now())",id,title,content);
+	}
+	public int userjoin(String id, String pw, String name, String gender, String email) {
+		return jdbcTemplate.update("insert into user values (?,?,?,?,?)",id,pw,name,gender,email);
+	}
+	public List<HealthDTO> select() {
+		List<HealthDTO> hd = jdbcTemplate.query("select * from bbs order by bbsid desc",
+				healthDTORowMapper
+				);
+		return hd;
+	}
 	
-	AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext(Config.class);
+	public List<UserDTO> uselect(String userID) {
+		List<UserDTO> ud = jdbcTemplate.query("select * from user where userID = ?",
+				new Object[] {userID},
+				userDTORowMapper);
+		return ud;
+	}
 //	public List<HealthDTO> select(int start, int size) {
 //		List<HealthDTO> hd = jdbcTemplate.query(
 //				"select * from bbs order by bbsid desc limit ?,?",

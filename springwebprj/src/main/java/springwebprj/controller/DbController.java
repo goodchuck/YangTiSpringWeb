@@ -13,6 +13,7 @@ import javax.sql.DataSource;
 
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 
+import springwebprj.main.Config;
 import springwebprj.main.HealthDTO;
 import springwebprj.main.Test;
 
@@ -30,62 +32,47 @@ import springwebprj.main.Test;
 public class DbController {
 
 	@Autowired
-	ComboPooledDataSource dataSource;
-	//BasicDataSource dataSource;
-	
-	
-	
 	private JdbcTemplate jdbcTemplate;
 	
-	public DbController(DataSource dataSource) {
-		jdbcTemplate = new JdbcTemplate(dataSource);
-	}
-	public int update(String bc, String tt, int bi) {
-		return jdbcTemplate.update("update bbs set content =?,title=? where bbsid = ?",bc,tt,bi);
-	}
-	public int delete(int bbsid) {
-		return jdbcTemplate.update("update bbs set bbsav = 0 where bbsid = ?",bbsid);
-	}
-	public int insert(String id, String title, String content) {
-		return jdbcTemplate.update("insert into bbs (id, title, content, nowtime) values(?,?,?,now())",id,title,content);
-	}
-	public int userjoin(String id, String pw, String name, String gender, String email) {
-		return jdbcTemplate.update("insert into user values (?,?,?,?,?)",id,pw,name,gender,email);
-	}
+	AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext(Config.class);
+	HealthDAO dao = ctx.getBean("hd",HealthDAO.class);
 	
-	Connection conn = null;
-	PreparedStatement pstmt = null;
-	ResultSet rs = null;
-	
+
+
 	@RequestMapping("userLoginAction")
 	public String userLoginAction(HttpServletRequest request, Model model, HttpSession session) {
-		String SQL = "SELECT * FROM USER WHERE userID = ?";
-
-		try {
-			conn = dataSource.getConnection();
-			pstmt = conn.prepareStatement(SQL);
-			pstmt.setString(1, request.getParameter("userID"));
-			rs = pstmt.executeQuery();
-			if(rs.next()) {
-				if(rs.getString("userPassword").equals(request.getParameter("userPassword"))) {
-					model.addAttribute("ts1", rs.getString("userPassword"));
-					model.addAttribute("testForm",rs.getString("userID"));
-					session.setAttribute("sessiontest", rs.getString("userID"));
-					return "redirect:/index";
-				} else {
-					model.addAttribute("msg", "failure");
-					return "userLogin";
-				}
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			model.addAttribute("msg", "failure");
-			return "userLogin";
-		} finally {
-			try { if(conn != null) conn.close(); } catch (Exception e) { e.printStackTrace();}
-			try { if(pstmt != null) pstmt.close(); } catch (Exception e) { e.printStackTrace();}
-			try { if(rs != null) rs.close(); } catch (Exception e) { e.printStackTrace();}
+		//String SQL = "SELECT * FROM USER WHERE userID = ?";
+		//if(request.getParameter("userID").equals(dao.uselect(request.getParameter("userID")))) 
+		if(dao.uselect(request.getParameter("userID")).get(0).getUserPassword().equals(request.getParameter("userPassword"))) {
+			session.setAttribute("sessiontest", dao.uselect(request.getParameter("userID")).get(0).getUserID());
+			return "redirect:/index";
 		}
+		
+//		try {
+//			conn = dataSource.getConnection();
+//			pstmt = conn.prepareStatement(SQL);
+//			pstmt.setString(1, request.getParameter("userID"));
+//			rs = pstmt.executeQuery();
+//			if(rs.next()) {
+//				if(rs.getString("userPassword").equals(request.getParameter("userPassword"))) {
+//					model.addAttribute("ts1", rs.getString("userPassword"));
+//					model.addAttribute("testForm",rs.getString("userID"));
+//					session.setAttribute("sessiontest", rs.getString("userID"));
+//					return "redirect:/index";
+//				} else {
+//					model.addAttribute("msg", "failure");
+//					return "userLogin";
+//				}
+//			}
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//			model.addAttribute("msg", "failure");
+//			return "userLogin";
+//		} finally {
+//			try { if(conn != null) conn.close(); } catch (Exception e) { e.printStackTrace();}
+//			try { if(pstmt != null) pstmt.close(); } catch (Exception e) { e.printStackTrace();}
+//			try { if(rs != null) rs.close(); } catch (Exception e) { e.printStackTrace();}
+//		}
 		return "redirect:/userLogin";
 	}
 	
@@ -130,7 +117,7 @@ public class DbController {
 //			try { if(pstmt != null) pstmt.close(); } catch (Exception e) { e.printStackTrace();}
 //			try { if(rs != null) rs.close(); } catch (Exception e) { e.printStackTrace();}
 //		}
-			delete(Integer.parseInt(request.getParameter("bbsid")));
+			dao.delete(Integer.parseInt(request.getParameter("bbsid")));
 		}
 		else {
 		}
@@ -161,7 +148,7 @@ public class DbController {
 //			try { if(pstmt != null) pstmt.close(); } catch (Exception e) { e.printStackTrace();}
 //			try { if(rs != null) rs.close(); } catch (Exception e) { e.printStackTrace();}
 //		}
-		update(request.getParameter("bbsContent"),request.getParameter("bbsTitle"),Integer.parseInt(request.getParameter("bbsid")));
+		dao.update(request.getParameter("bbsContent"),request.getParameter("bbsTitle"),Integer.parseInt(request.getParameter("bbsid")));
 		return "redirect:/index";
 	}
 
@@ -188,7 +175,7 @@ public class DbController {
 //			try { if(pstmt != null) pstmt.close(); } catch (Exception e) { e.printStackTrace();}
 //			try { if(rs != null) rs.close(); } catch (Exception e) { e.printStackTrace();}
 //		}
-		userjoin(request.getParameter("userID"),request.getParameter("userPassword"),request.getParameter("userName"),request.getParameter("userGender"),request.getParameter("userEmail"));
+		dao.userjoin(request.getParameter("userID"),request.getParameter("userPassword"),request.getParameter("userName"),request.getParameter("userGender"),request.getParameter("userEmail"));
 		return "redirect:/index";
 	}
 	
@@ -218,7 +205,7 @@ public class DbController {
 //			try { if(pstmt != null) pstmt.close(); } catch (Exception e) { e.printStackTrace();}
 //			try { if(rs != null) rs.close(); } catch (Exception e) { e.printStackTrace();}
 //		}
-		insert((String)session.getAttribute("sessiontest"),request.getParameter("Title"),contentall);
+		dao.insert((String)session.getAttribute("sessiontest"),request.getParameter("Title"),contentall);
 		return "redirect:/index";
 	}
 }

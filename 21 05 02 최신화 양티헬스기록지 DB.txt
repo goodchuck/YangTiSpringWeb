@@ -1,0 +1,34 @@
+21/05/02 최신 수정
+
+헬스기록지에 관한 DB SQL입니다.
+
+
+--데이터 베이스 관련--
+create database yangtihealth;
+
+use yangtihealth;
+------------------------
+
+-- 유저 테이블 생성--
+create table user (
+ userID varchar(20) PRIMARY KEY,
+ userPassword varchar(20),
+ userName varchar(20),
+ userGender varchar(20),
+ userEmail varchar(50)
+)
+
+------------------------
+
+-- 게시글 테이블 생성 --
+create table bbs (
+ bbsid int(11) auto_increment,
+ id varchar(20) ,
+ title varchar(50) NOT NULL,
+ content varchar(2048) NOT NULL,
+ bbsav int(10) default 1,
+ nowtime timestamp default 0,
+ PRIMARY KEY (bbsid, id)
+)
+
+------------------------
